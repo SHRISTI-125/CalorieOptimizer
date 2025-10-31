@@ -40,4 +40,4 @@ The goal of <b>CalorieOptimizer</b> is to create a personalized nutrition guide 
 
 <hr>
 
-<h3 align="center">Promoting Health, Reducing Food Waste and feeding hope through technology.</h3>
+<h3 align="center">Promoting Health, Preventing food waste and Powering hope through technology.</h3>
