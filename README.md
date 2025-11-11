@@ -13,7 +13,7 @@ It leverages AI-driven insights to predict calorie intake, identify potential he
 The goal of <b>CalorieOptimizer</b> is to create a personalized nutrition guide that:
 </p>
 <ul>
-  <li>Predicts the <b>calories and nutrient composition</b> of any food item.</li>
+  <li>Predicts the <b>calories and nutrient composition</b> of food item.</li>
   <li>Suggests <b>healthier alternatives</b> based on user preferences and health goals.</li>
   <li>Raises <b>awareness</b> about dietary impact through intelligent recommendations.</li>
 </ul>
