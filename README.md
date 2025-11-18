@@ -40,4 +40,8 @@ The goal of <b>CalorieOptimizer</b> is to create a personalized nutrition guide 
 
 <hr>
 
+## Dataset
+<h3>Food101 Kaggle : https://www.kaggle.com/datasets/dansbecker/food-101</h3>
+<h3>Recipe Kaggle : https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions/data</h3>
+
 <h3 align="center">Promoting Health, Preventing food waste and Powering hope through technology.</h3>
