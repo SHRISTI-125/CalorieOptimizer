@@ -4,22 +4,21 @@
 ![Tech](https://img.shields.io/badge/tech-AI%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> **CalorieOptimizer** is an intelligent health-focused web application that uses **AI and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, and recommend healthier alternatives.  
-It empowers users to make *better, smarter, and healthier* dietary decisions in real-time.
+> **CalorieOptimizer** is an intelligent health-focused web application that uses **AI and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, generate recipes, suggest healthier alternatives, provide NGO donation options, and track **daily calorie intake** — helping users make *smarter and healthier* food decisions in real-time.
 
 ---
 
 ## 📌 Problem Statement
 
-In today’s society, people consume food without understanding its true nutritional and health impact. This often leads to:
+In today’s society, people often consume food without understanding its true nutritional impact. This results in:
 
-- Obesity
-- Diabetes
-- Heart problems
-- Poor eating habits
-- Food waste
+- Obesity  
+- Diabetes  
+- Heart diseases  
+- Poor eating habits  
+- Increased food waste  
 
-**CalorieOptimizer solves this problem** by combining image recognition with powerful ML models to provide instant, actionable nutritional insights.
+**CalorieOptimizer solves this problem** by using image recognition and machine learning to provide instant, personalized, and actionable nutritional insights.
 
 ---
 
@@ -27,10 +26,12 @@ In today’s society, people consume food without understanding its true nutriti
 
 The main goals of **CalorieOptimizer** are to:
 
-- Predict **calorie count and nutrient composition** of food items
-- Suggest **healthier alternatives** for unhealthy foods
-- Provide **personalized recommendations** based on user goals
-- Spread **awareness** about the long-term effects of unhealthy food
+- Predict **calorie count and nutrient composition** of food items  
+- Suggest **healthier alternatives** for unhealthy foods  
+- Generate **recipes** using available ingredients  
+- Provide **NGO donation options** to reduce food wastage  
+- Track **daily calorie intake** of users  
+- Provide **personalized recommendations** based on health goals  
 - Promote **balanced nutrition and sustainable eating habits**
 
 ---
@@ -38,147 +39,188 @@ The main goals of **CalorieOptimizer** are to:
 ## ✨ Key Features
 
 - 🍔 **Image-Based Food Recognition**  
-  Upload images of food to instantly identify the food item.
+  Upload food images to instantly identify the dish.
 
 - 🧠 **AI-Powered Nutritional Analysis**  
-  Uses trained models to analyze calories, macros and micros.
+  Predicts calories, macros and micronutrients using ML models.
 
-- 🥗 **Personalized Healthy Suggestions**  
-  Based on your health goals: weight-loss, fitness or balanced diet.
+- 🥗 **Healthier Food Alternatives**  
+  Suggests better options with lower calories & higher nutrition.
 
-- 📊 **Detailed Nutritional Breakdown**  
-  - Calories
-  - Proteins
-  - Carbohydrates
-  - Fats
-  - Vitamins
-  - Minerals
+- 📊 **Detailed Nutritional Breakdown**
+  - Calories  
+  - Proteins  
+  - Carbohydrates  
+  - Fats  
+  - Vitamins  
+  - Minerals  
 
-- 🩺 **Health Risk Detection**  
+- 🍳 **AI Recipe Generator**  
+  Generates recipes from:
+  - Detected food
+  - User-entered ingredients
+
+- 🩺 **Health Risk Detection**
   Identifies foods linked to:
   - Obesity
   - Diabetes
-  - Heart diseases
+  - Heart Disease
 
-- 📜 **User History Tracking**  
-  Keeps track of previous searches and optimizations.
+- ♻️ **NGO Donation Support**
+  Suggests nearby NGOs where extra food can be donated.
 
-- 🌍 **Eco-Friendly Goal**  
-  Encourages reduced food waste and mindful eating.
+- 📜 **Daily Intake Tracking**
+  Tracks:
+  - Daily calorie consumption  
+  - Food history  
+  - Weekly reports  
+
+- 🌍 **Sustainability Focus**
+  Encourages **zero food waste** and mindful eating.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### 🎨 Frontend
-<p>
-  <img src="https://skillicons.dev/icons?i=html,css,js,react" />
-</p>
-
 - HTML5  
 - CSS3  
 - JavaScript  
 - React.js  
 
+**Icons:**  
+```
+https://skillicons.dev/icons?i=html,css,js,react
+```
+
 ---
 
 ### 🧠 Backend
-<p>
-  <img src="https://skillicons.dev/icons?i=python,tensorflow,flask,scikitlearn,mongodb,jupyter" />
-</p>
+- Python  
+- Flask  
+- TensorFlow  
+- Scikit-Learn  
+- MongoDB  
+- REST APIs  
+- Jupyter Notebook  
 
-- Python
-- Flask
-- TensorFlow / Scikit-Learn
-- MongoDB (Database)
-- REST APIs
-- Jupyter Notebook
+**Icons:**  
+```
+https://skillicons.dev/icons?i=python,tensorflow,flask,scikitlearn,mongodb,jupyter
+```
 
 ---
 
 ## 📚 Datasets Used
 
-- **Food101 Dataset**  
+- **Food101 Dataset (Kaggle)**  
   https://www.kaggle.com/datasets/dansbecker/food-101
 
-- **Food.com Recipes Dataset**  
+- **Food.com Recipes Dataset (Kaggle)**  
   https://www.kaggle.com/datasets/shuyangli94/food-com-recipes-and-user-interactions/data
 
-These datasets were used to train the model for **food classification and nutrition estimation**.
+These datasets were used for **food classification, nutrition estimation, and recipe generation**.
 
 ---
 
 ## 🧩 System Architecture
 
-User → React Frontend → Flask API → ML Model → MongoDB
-
-
+```
+User
+   ↓
+React Frontend
+   ↓
+Flask API
+   ↓
+Machine Learning Model
+   ↓
+MongoDB Database
+```
 
 ---
 
 ## ⚙️ How To Run This Project Locally
 
-###  Clone the Repository
+### 1️⃣ Clone the Repository
 
 ```bash
 git clone https://github.com/SHRISTI-125/CalorieOptimizer.git
 cd CalorieOptimizer
 ```
 
-### backend
+---
+
+### 2️⃣ Backend Setup
 
 ```bash
-cd "backend"
+cd backend
+pip install -r requirements.txt
 python unified_backend.py
 ```
 
-### frontend
-```bash
-cd "frontend"
-npm install
-npm start
-npm run dev
+Server will start on:
+```
+http://127.0.0.1:5000
 ```
 
-🌟 Why This Project is Important
+---
 
-✔ Helps people make informed food choices
-✔ Supports healthy lifestyle habits
-✔ Reduces food waste
-✔ Encourages mindful nutrition
-✔ Useful for students, patients & fitness enthusiasts
+### 3️⃣ Frontend Setup
 
-Can be used by:
+```bash
+cd frontend
+npm install
+npm start
+```
 
-<ul>
-  <li>Dieticians</li>
-  <li>Fitness trainers</li>
-  <li>Health-conscious individuals</li>
-  <li>Students & researchers</li>
-  <li>NGOs and nutrition programs</li>
-</ul>
+Frontend will start on:
+```
+http://localhost:3000
+```
 
-🔮 Future Scope
+---
 
-✅ Barcode scanner for packaged foods
+## 🌟 Why This Project Matters
 
-✅ Mobile App (React Native / Flutter)
+✔ Helps people make informed food choices  
+✔ Supports healthy lifestyle habits  
+✔ Reduces food waste  
+✔ Enables smarter nutrition tracking  
+✔ Supports NGOs and food donation programs  
 
-✅ AI meal planner
+Useful for:
+- Dieticians
+- Fitness trainers
+- Health-conscious people
+- Students & researchers
+- NGOs
+- Health organizations
 
-✅ Fitness & activity tracking
+---
 
-✅ Voice assistant integration
+## 🔮 Future Scope
 
-✅ Doctor & nutritionist consultation
+✅ Barcode scanner for packaged foods  
+✅ Mobile App (React Native / Flutter)  
+✅ AI-based meal planner  
+✅ Fitness & activity tracking  
+✅ Voice assistant integration  
+✅ Doctor & nutritionist consultation  
+✅ Multi-language support  
 
-✅ Multi-language support
+---
 
-<h3 align="center"> 🌍 Promoting Health • Preventing Food Waste • Powering Hope Through Technology 🍃 </h3> 
+## 👩‍💻 Author
 
-👩‍💻 Author
-Shristi Kumari
+**Shristi Kumari**  
+_B.Tech CSE | AI & Web Developer_
 
-⭐ Support
+---
 
-If you like this project, don’t forget to ⭐ star the repository.
+## ⭐ Support
+
+If you like this project, please **⭐ star the repository** and share it with others.
+
+---
+
+<h3 align="center"> 🌍 Promoting Health • Preventing Food Waste • Powering Hope Through Technology 🍃 </h3>
