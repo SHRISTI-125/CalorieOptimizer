@@ -1,8 +1,8 @@
-# 🍏 CalorieOptimizer — AI-Powered Smart Nutrition Companion
+# CalorieOptimizer : AI-Powered Smart Nutrition Companion
 
 ![Status](https://img.shields.io/badge/status-active-success)
-![Tech](https://img.shields.io/badge/tech-AI%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+![Tech](https://img.shields.io/badge/tech-AI%20%7C%20DeepLearning%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
 > **CalorieOptimizer** is an intelligent health-focused web application that uses **Deep Learning and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, generate recipes, suggest healthier alternatives, provide NGO donation options, and track **daily calorie intake** — helping users make *smarter and healthier* food decisions in real-time.
 
@@ -31,7 +31,6 @@ The main goals of **CalorieOptimizer** are to:
 - Generate **recipes** using available ingredients  
 - Provide **NGO donation options** to reduce food wastage  
 - Track **daily calorie intake** of users  
-- Provide **personalized recommendations** based on health goals  
 - Promote **balanced nutrition and sustainable eating habits**
 
 ---
@@ -49,15 +48,12 @@ The main goals of **CalorieOptimizer** are to:
 
 - 📊 **Detailed Nutritional Breakdown**
   - Calories  
-  - Proteins  
-  - Carbohydrates  
-  - Fats  
-  - Vitamins  
-  - Minerals  
+  - Sugar
+  - Fat
+  - Cholestrol
 
 - 🍳 **AI Recipe Generator**  
   Generates recipes from:
-  - Detected food
   - User-entered ingredients
 
 - 🩺 **Health Risk Detection**
