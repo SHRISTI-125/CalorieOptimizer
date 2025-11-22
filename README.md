@@ -187,13 +187,23 @@ http://localhost:3000
 ✔ Enables smarter nutrition tracking  
 ✔ Supports NGOs and food donation programs  
 
-Useful for:
+## Useful for:
 - Dieticians
 - Fitness trainers
 - Health-conscious people
 - Students & researchers
 - NGOs
 - Health organizations
+
+## 🎯 Created For
+This project is created for:
+- Individuals who want to maintain a healthy lifestyle  
+- People managing conditions like obesity, diabetes, and heart disease  
+- Dieticians and fitness professionals  
+- Students & researchers in AI and health-tech  
+- NGOs and community nutrition programs  
+- Anyone who believes in mindful and sustainable eating
+
 
 ---
 
@@ -211,6 +221,7 @@ Useful for:
 
 ## 👩‍💻 Author
 
+Built with the vision to empower healthier choices and minimize food waste using technology.
 **Shristi Kumari**  
 _B.Tech CSE | AI & Web Developer_
 
