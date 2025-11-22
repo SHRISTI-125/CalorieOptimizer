@@ -221,7 +221,8 @@ This project is created for:
 
 ## 👩‍💻 Author
 
-Built with the vision to empower healthier choices and minimize food waste using technology.
+Built with the vision to empower healthier choices and minimize food waste using technology.🌱<br>
+<br>
 **Shristi Kumari**  
 _B.Tech CSE | AI & Web Developer_
 
