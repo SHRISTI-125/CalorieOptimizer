@@ -4,7 +4,7 @@
 ![Tech](https://img.shields.io/badge/tech-AI%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> **CalorieOptimizer** is an intelligent health-focused web application that uses **AI and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, generate recipes, suggest healthier alternatives, provide NGO donation options, and track **daily calorie intake** — helping users make *smarter and healthier* food decisions in real-time.
+> **CalorieOptimizer** is an intelligent health-focused web application that uses **Deep Learning and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, generate recipes, suggest healthier alternatives, provide NGO donation options, and track **daily calorie intake** — helping users make *smarter and healthier* food decisions in real-time.
 
 ---
 
@@ -89,9 +89,11 @@ The main goals of **CalorieOptimizer** are to:
 - React.js  
 
 **Icons:**  
-```
-https://skillicons.dev/icons?i=html,css,js,react
-```
+
+<p>
+  <img src="https://skillicons.dev/icons?i=html,css,js,react" />
+</p>
+
 
 ---
 
@@ -105,9 +107,10 @@ https://skillicons.dev/icons?i=html,css,js,react
 - Jupyter Notebook  
 
 **Icons:**  
-```
-https://skillicons.dev/icons?i=python,tensorflow,flask,scikitlearn,mongodb,jupyter
-```
+
+<p>
+  <img src="https://skillicons.dev/icons?i=python,tensorflow,flask,scikitlearn,mongodb,jupyter" />
+</p>
 
 ---
 
@@ -200,13 +203,13 @@ Useful for:
 
 ## 🔮 Future Scope
 
-✅ Barcode scanner for packaged foods  
-✅ Mobile App (React Native / Flutter)  
-✅ AI-based meal planner  
-✅ Fitness & activity tracking  
-✅ Voice assistant integration  
-✅ Doctor & nutritionist consultation  
-✅ Multi-language support  
+<ul>
+  <li>Barcode scanner for packaged foods  </li>
+  <li>Mobile App (React Native)  </li>
+  <li>AI-based meal planner </li>
+  <li>Fitness & activity tracking  </li>
+  <li>Doctor & nutritionist consultation  </li>
+</ul>
 
 ---
 
