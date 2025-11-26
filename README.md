@@ -1,4 +1,4 @@
-# CalorieOptimizer : AI-Powered Smart Nutrition Companion
+# CalorieOptimizer 
 
 ![Status](https://img.shields.io/badge/status-active-success)
 ![Tech](https://img.shields.io/badge/tech-AI%20%7C%20DeepLearning%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
@@ -172,7 +172,7 @@ Move the following files into the `backend` folder:
 - requirements.txt
 - unified_backend.py
 - update.py
-- 
+  
 Open your terminal in the backend folder and install all required packages:
 
 ```bash
