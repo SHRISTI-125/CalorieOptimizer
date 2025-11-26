@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+
+.ngo-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f4f8;
+    border-radius: 20px;
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+}
+
+.main-heading {
+    font-size: 2.75rem;
+    color: #0c3c85;
+    margin-bottom: 35px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+/* --- SEARCH SECTION --- */
+.search-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-controls input {
+    padding: 14px 18px;
+    border: 1px solid #b0bec5;
+    border-radius: 10px;
+    font-size: 1rem;
+    flex-grow: 1;
+    max-width: 280px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.search-controls input:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 6px rgba(33, 150, 243, 0.4);
+}
+
+.search-button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    background-color: #1976d2;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.search-button:hover {
+    background-color: #0d47a1;
+    transform: translateY(-2px);
+}
+
+/* --- RESULTS SECTION --- */
+.results-divider {
+    border: 0;
+    height: 1px;
+    background-color: #cfd8dc;
+    margin-bottom: 30px;
+}
+
+.ngo-card {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 14px;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.ngo-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ngo-card p {
+    margin: 8px 0;
+    color: #37474f;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.ngo-card strong {
+    color: #263238;
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.ngo-focus {
+    margin-top: 12px;
+    padding: 10px 14px;
+    background-color: #e3f2fd;
+    border-left: 5px solid #2196f3;
+    border-radius: 6px;
+    font-style: italic;
+    color: #1976d2;
+}
+
+/* --- WEBSITE LINK --- */
+.ngo-website a {
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.ngo-website a:hover {
+    text-decoration: underline;
+    color: #0d47a1;
+}
+
+.ngo-divider {
+    margin-top: 20px;
+    border: 0;
+    height: 1px;
+    background-color: #eceff1;
+}
+
+/* --- NO RESULTS --- */
+.no-results {
+    color: #607d8b;
+    text-align: center;
+    padding: 45px;
+    font-size: 1.15rem;
+    border: 2px dashed #b0bec5;
+    border-radius: 14px;
+    background-color: #ffffff;
+}
+
+/* --- BADGES (Accepts Food) --- */
+.accepts-food-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-left: 12px;
+    letter-spacing: 0.3px;
+}
+
+.accepts-food-yes {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.accepts-food-no {
+    background-color: #ffebee;
+    color: #c62828;
+}

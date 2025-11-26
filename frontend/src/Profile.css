@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+
+.profile-container {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-size: larger;
+    color: #cbd5e1; 
+}
+body {
+  background-color: #c2c4c7;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2em;
+}
+
+
+.recent-activity-section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #334155; 
+}
+
+.recent-activity-section h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #60a5fa; 
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #334155;
+}
+
+
+.activity-item {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dotted #475569; 
+    font-size: 0.95rem;
+}
+
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+
+.activity-item span:first-child {
+    font-weight: 600;
+    color: #e2e8f0;
+    flex-basis: 35%; 
+}
+
+
+.profile-container h1 {
+    font-size: 2.2rem;
+    color: #60a5fa; 
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.message-success {
+    background-color: #153e24; 
+    color: #34d399;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #10b981;
+}
+
+
+.profile-card {
+    background: #1f2937; 
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); 
+    border: 1px solid #334155; 
+}
+
+.welcome-heading {
+    font-size: 1.6rem;
+    color: #e2e8f0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #334155;
+    padding-bottom: 10px;
+}
+
+.data-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+.data-item {
+    padding: 8px 0;
+}
+
+.data-item strong {
+    color: #94a3b8;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.metric-section {
+    border-top: 1px dashed #475569;
+    padding-top: 20px;
+}
+
+.metric-section p {
+    font-size: 1.1rem;
+    margin: 8px 0;
+}
+
+.metric-section strong {
+    color: #60a5fa;
+    font-weight: 700;
+}
+
+
+.edit-form-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #475569;
+    border-radius: 8px;
+    background-color: #0f172a; 
+    color: #e2e8f0;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.edit-form-container input:focus {
+    outline: none;
+    border-color: #60a5fa; 
+    box-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
+}
+
+.edit-hint {
+    color: #94a3b8;
+    font-size: 0.8rem;
+    margin-top: -5px;
+    margin-bottom: 20px;
+}
+
+
+.profile-container button {
+    padding: 12px 25px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: all 0.3s ease;
+}
+
+.button-primary {
+    background: #60a5fa;
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.button-primary:hover {
+    background: #3b82f6;
+    box-shadow: 0 4px 15px rgba(96, 165, 250, 0.4);
+}
+
+.button-secondary {
+    background: #475569; 
+    color: #e2e8f0;
+}
+
+.button-secondary:hover {
+    background: #64748b;
+}

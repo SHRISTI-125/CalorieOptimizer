@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+body, p, input, button {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* BACKGROUND */
+.result-container {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #1e293b, #020617);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* GLASS + Neomorphism */
+.neo-card {
+  width: 450px;
+  padding: 35px;
+  border-radius: 28px;
+  background: #111827;
+  box-shadow:
+    12px 12px 24px #020617,
+    -12px -12px 24px #1f2937;
+  text-align: center;
+  color: white;
+  animation: floatUp 1s ease;
+}
+
+/* MAIN TITLE */
+.big-heading {
+  font-size: 34px;
+  margin-bottom: 20px;
+  color: #60a5fa;
+}
+
+/* WHEEL */
+.wheel-container {
+  position: relative;
+  margin: 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wheel-text {
+  position: absolute;
+  text-align: center;
+}
+
+.wheel-text h2 {
+  font-size: 32px;
+  margin: 0;
+}
+
+.progress-circle {
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: 1s ease;
+}
+
+/* FOOD NAME */
+.food-name {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+/* MACROS */
+.macros {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.macro-box {
+  padding: 14px;
+  border-radius: 16px;
+  background: #0f172a;
+  box-shadow:
+    inset 6px 6px 12px #020617,
+    inset -6px -6px 12px #1f2937;
+}
+
+/* RISK / ALT */
+.risk-box {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #dc2626, #7f1d1d);
+}
+
+.alt-box {
+  margin-top: 12px;
+  padding: 15px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #059669, #064e3b);
+}
+
+/* SPEAK */
+.speak-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  border: none;
+  background: #3b82f6;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.health-badge {
+  position: absolute;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: white;
+  top: 35px;
+  right: 35px;
+}
+
+.health-badge.red {
+  background: #dc2626;
+}
+
+.health-badge.orange {
+  background: #f97316;
+}
+
+.health-badge.green {
+  background: #16a34a;
+}
+
+.category {
+  color: #64748b;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.description {
+  font-style: italic;
+  color: #94a3b8;
+  margin-bottom: 20px;
+}
+
+
+.speak-btn:hover {
+  background: #1d4ed8;
+  transform: scale(1.03);
+}
+
+.health-badge {
+  margin: 10px auto 15px;
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 14px;
+  font-weight: bold;
+  width: fit-content;
+}
+
+.green-badge { background: #16a34a; color: white; }
+.yellow-badge { background: #facc15; color: black; }
+.red-badge { background: #dc2626; color: white; }
+
+
+/* ANIMATION */
+@keyframes floatUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}

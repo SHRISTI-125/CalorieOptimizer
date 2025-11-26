@@ -1,0 +1,154 @@
+/* Login.css */
+
+/* --- GENERAL CONTAINER AND LAYOUT --- */
+.login-container {
+    /* Full-screen background matching the previous theme */
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #1e293b, #020617);
+    font-family: 'Poppins', sans-serif;
+    color: #e2e8f0; /* Light text for dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center the card vertically and horizontally */
+    padding: 20px;
+}
+
+/* --- THE LOGIN CARD --- */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background: #111827; /* Dark background matching the neo-card */
+    border-radius: 20px;
+    /* Subtle lift/Neumorphism-like shadow */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    border: 1px solid #1e293b; /* Very subtle border */
+}
+
+.login-card h2 {
+    font-size: 2rem;
+    color: #60a5fa; /* Primary blue accent */
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* --- FORM STYLES --- */
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Spacing between form elements */
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 12px;
+    background: #0f172a; /* Darker input background */
+    color: #e2e8f0;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    /* Inset shadow for the 'pressed' look */
+    box-shadow:
+        inset 4px 4px 8px #020617,
+        inset -4px -4px 8px #1f2937;
+    transition: all 0.3s ease;
+}
+
+.login-form input:focus {
+    outline: none;
+    /* Subtle blue focus glow */
+    border: 1px solid #60a5fa;
+    box-shadow: 0 0 5px #3b82f6, inset 4px 4px 8px #020617, inset -4px -4px 8px #1f2937;
+}
+
+.login-form input::placeholder {
+    color: #64748b;
+}
+
+/* --- REMEMBER ME CHECKBOX --- */
+.remember-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.remember-label input[type="checkbox"] {
+    /* Custom checkbox styling (or leave default, but this is better) */
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #475569;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #0f172a;
+    position: relative;
+}
+
+.remember-label input[type="checkbox"]:checked {
+    background-color: #60a5fa;
+    border-color: #60a5fa;
+}
+
+.remember-label input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: #111827;
+    font-size: 14px;
+}
+
+/* --- SUBMIT BUTTON --- */
+.login-btn {
+    padding: 14px 25px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 15px;
+    background: #3b82f6; /* Bright blue accent */
+    color: white;
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+}
+
+/* --- MESSAGES AND ERRORS --- */
+.error-text {
+    color: #f87171; /* Light red for errors */
+    font-size: 0.9rem;
+    text-align: left;
+    margin-top: -10px; /* Pull error message closer to the field */
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+.status-message {
+    margin-top: 25px;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 500;
+    color: #34d399; /* Green for success */
+    background-color: #153e24;
+    border: 1px solid #10b981;
+}
+
+.status-message.error {
+    color: #f87171; /* Red for generic failure */
+    background-color: #451b1b;
+    border-color: #ef4444;
+}
