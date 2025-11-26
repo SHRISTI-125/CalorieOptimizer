@@ -140,7 +140,7 @@ MongoDB Database
 
 ## ⚙️ How To Run This Project Locally
 
-### 1️⃣ Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/SHRISTI-125/CalorieOptimizer.git
@@ -149,7 +149,31 @@ cd CalorieOptimizer
 
 ---
 
-### 2️⃣ Backend Setup
+## 🔧 Backend Setup
+
+Follow these steps to set up and run the backend locally.
+
+### 📁 Step 1: Create backend folder
+Create a folder named **`backend`** in your project directory.
+
+### 📄 Step 2: Add required files
+Move the following files into the `backend` folder:
+- app4.py
+- food_embeddings.pkl
+- food_prediction_10epoches.h5
+- ingredients_embeddings.npy
+- labels.json
+- ngo_routes.py
+- nlp_for_foodname.py
+- predictimage_fromtext.py
+- predictimagename.py
+- recipe_routes.py
+- recipes.index
+- requirements.txt
+- unified_backend.py
+- update.py
+- 
+Open your terminal in the backend folder and install all required packages:
 
 ```bash
 cd backend
@@ -164,7 +188,7 @@ http://127.0.0.1:5000
 
 ---
 
-### 3️⃣ Frontend Setup
+### 🧩 Frontend Setup
 
 ```bash
 cd frontend
