@@ -79,13 +79,6 @@ The main goals of **CalorieOptimizer** are to:
 ## 🛠️ Tech Stack
 
 ### 🎨 Frontend
-- HTML5  
-- CSS3  
-- JavaScript  
-- React.js  
-
-**Icons:**  
-
 <p>
   <img src="https://skillicons.dev/icons?i=html,css,js,react" />
 </p>
@@ -94,16 +87,6 @@ The main goals of **CalorieOptimizer** are to:
 ---
 
 ### 🧠 Backend
-- Python  
-- Flask  
-- TensorFlow  
-- Scikit-Learn  
-- MongoDB  
-- REST APIs  
-- Jupyter Notebook  
-
-**Icons:**  
-
 <p>
   <img src="https://skillicons.dev/icons?i=python,tensorflow,flask,scikitlearn,mongodb,jupyter" />
 </p>
