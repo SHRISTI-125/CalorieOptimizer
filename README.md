@@ -219,8 +219,8 @@ This project is created for:
 
 Built with the vision to empower healthier choices and minimize food waste using technology.🌱<br>
 <br>
-**Shristi Kumari**  
-_B.Tech CSE | AI & Web Developer_
+[Shristi Kumari](https://github.com/SHRISTI-125)
+
 
 ---
 
