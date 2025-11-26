@@ -46,11 +46,8 @@ The main goals of **CalorieOptimizer** are to:
 - 🥗 **Healthier Food Alternatives**  
   Suggests better options with lower calories & higher nutrition.
 
-- 📊 **Detailed Nutritional Breakdown**
-  - Calories  
-  - Sugar
-  - Fat
-  - Cholestrol
+- #### 📊 Detailed Nutritional Breakdown
+  Calories | Sugar | Fat | Cholestrol
 
 - 🍳 **AI Recipe Generator**  
   Generates recipes from:
@@ -66,10 +63,7 @@ The main goals of **CalorieOptimizer** are to:
   Suggests nearby NGOs where extra food can be donated.
 
 - 📜 **Daily Intake Tracking**
-  Tracks:
-  - Daily calorie consumption  
-  - Food history  
-  - Weekly reports  
+  Tracks: Daily calorie consumption | Food history | Weekly reports  
 
 - 🌍 **Sustainability Focus**
   Encourages **zero food waste** and mindful eating.
