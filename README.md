@@ -188,19 +188,14 @@ http://localhost:3000
 
 ## 🌟 Why This Project Matters
 
-✔ Helps people make informed food choices  
-✔ Supports healthy lifestyle habits  
-✔ Reduces food waste  
-✔ Enables smarter nutrition tracking  
-✔ Supports NGOs and food donation programs  
+- Helps people make informed food choices
+- Supports healthy lifestyle habits
+- Reduces food waste
+- Enables smarter nutrition tracking
+- Supports NGOs and food donation programs  
 
-## Useful for:
-- Dieticians
-- Fitness trainers
-- Health-conscious people
-- Students & researchers
-- NGOs
-- Health organizations
+## ✔ Useful for:
+Dieticians | Fitness trainers | Health-conscious people | Students & researchers | NGOs | Health organizations
 
 ## 🎯 Created For
 This project is created for:
