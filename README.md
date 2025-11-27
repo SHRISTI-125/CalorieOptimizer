@@ -226,7 +226,7 @@ Built with the vision to empower healthier choices and minimize food waste using
 
 ## ⭐ Support
 
-If you like this project, please **⭐ star the repository** and share it with others.
+If you like this project, **⭐ star the repository** .
 
 ---
 
