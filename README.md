@@ -93,7 +93,7 @@ The main goals of **CalorieOptimizer** are to:
   https://www.kaggle.com/datasets/dansbecker/food-101
 
 - **Food.com Recipes Dataset (Kaggle)**  
-  https://www.kaggle.com/datasets/shuyangli941/foodcom-recipesanduser-interactions/data
+  https://www.kaggle.com/datasets/yshuyang941/foodcom-recipesanduser-interactions/data
 
 These datasets were used for **food classification, nutrition estimation, and recipe generation**.
 
@@ -219,7 +219,7 @@ This project is created for:
 
 Built with the vision to empower healthier choices and minimize food waste using technology.🌱<br>
 <br>
-[Shristi Kumari](https://github.com/SHRISTI-125)
+[Shristi Kumari](https://github.com/SHRISTI-125) | 
 
 
 ---
