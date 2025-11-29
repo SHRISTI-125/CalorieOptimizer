@@ -30,7 +30,6 @@ body {
   align-items: center;
 }
 
-/* GLASS + Neomorphism */
 .neo-card {
   width: 450px;
   padding: 35px;
@@ -51,7 +50,7 @@ body {
   color: #60a5fa;
 }
 
-/* WHEEL */
+
 .wheel-container {
   position: relative;
   margin: 30px 0;
@@ -82,7 +81,7 @@ body {
   margin-bottom: 15px;
 }
 
-/* MACROS */
+
 .macros {
   display: grid;
   grid-template-columns: 1fr;
@@ -98,7 +97,7 @@ body {
     inset -6px -6px 12px #1f2937;
 }
 
-/* RISK / ALT */
+
 .risk-box {
   margin-top: 20px;
   padding: 15px;
@@ -193,3 +192,4 @@ body {
     opacity: 1;
   }
 }
+
