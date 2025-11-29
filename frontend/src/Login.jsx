@@ -46,12 +46,10 @@ function Login() {
       const genericErrorMessage = "Login failed. Please check your credentials.";
 
    if (err.response) {
-        // Handle validation errors from the server
     if (err.response.data.errors) {
      setErrors(err.response.data.errors);
-          setMessage(""); // Clear generic message if specific errors exist
+          setMessage(""); 
         } else if (err.response.data.message) {
-          // Handle specific failure messages (e.g., "Invalid password")
           setMessage(err.response.data.message);
         } else {
           setMessage(genericErrorMessage);
@@ -111,5 +109,6 @@ function Login() {
   </div>
  );
 }
+
 
 export default Login;
