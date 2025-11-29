@@ -16,36 +16,11 @@ import Test from './Test';
 function App() {
   return (
     <BrowserRouter>
-      <nav
-  style={{
-    background: 'rgba(17, 24, 39, 0.7)', 
-    backdropFilter: 'blur(10px)', 
-    color:"White",
-    padding: '16px 40px',
-    boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
-    borderBottom: '1px solid rgba(127, 162, 231, 1)', 
-    position: 'sticky', 
-    top: 0,
-    zIndex: 1000, 
-    width: '100%',
-    boxSizing: 'border-box',
-    alignItems: 'center'
-  }}
->
-  <ul
-    style={{
-      listStyle: 'none',
-      display: 'flex',
-      gap: '40px', 
-      margin: 0,
-      padding: 0,
-      justifyContent: 'flex-start', 
-      alignItems: 'center',
-    }}
-  >
-    {/* Navigation Links would go here */}
-    {/* Example Link Style (Not part of the snippet, but context) 
-    <li style={{ fontSize: '1rem', fontWeight: 600 }}>
+      <nav style={{ background: 'rgba(17, 24, 39, 0.7)', backdropFilter: 'blur(10px)', color:"White", padding: '16px 40px', boxShadow: '0 4px 15px rgba(0, 0, 0, 0.5)',
+                   borderBottom: '1px solid rgba(127, 162, 231, 1)', position: 'sticky', top: 0, zIndex: 1, width: '100%', boxSizing: 'border-box', alignItems: 'center'
+                  }}>
+        <ul style={{ listStyle: 'none', display: 'flex', gap: '40px', margin: 0, padding: 0, justifyContent: 'flex-start', alignItems: 'center'}}>
+          {/*<li style={{ fontSize: '1rem', fontWeight: 600 }}>
         <a href="/" style={{ color: '#60a5fa', textDecoration: 'none', transition: 'color 0.3s' }}>
             Home
         </a>
