@@ -20,12 +20,6 @@ function App() {
                    borderBottom: '1px solid rgba(127, 162, 231, 1)', position: 'sticky', top: 0, zIndex: 1, width: '100%', boxSizing: 'border-box', alignItems: 'center'
                   }}>
         <ul style={{ listStyle: 'none', display: 'flex', gap: '40px', margin: 0, padding: 0, justifyContent: 'flex-start', alignItems: 'center'}}>
-          {/*<li style={{ fontSize: '1rem', fontWeight: 600 }}>
-        <a href="/" style={{ color: '#60a5fa', textDecoration: 'none', transition: 'color 0.3s' }}>
-            Home
-        </a>
-    </li>
-    */}
           <li>
             <Link to="/PageOne" style={{ textDecoration: "none", color: "inherit" }}>Home</Link>
           </li>
