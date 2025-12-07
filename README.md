@@ -93,7 +93,7 @@ The main goals of **CalorieOptimizer** are to:
   https://www.kaggle.com/datasets/dansbecker/food-101
 
 - **Food.com Recipes Dataset (Kaggle)**  
-  https://www.kaggle.com/datasets
+  https://www.kaggle.com/datasets/recipe
 
 These datasets were used for **food classification, nutrition estimation, and recipe generation**.
 
