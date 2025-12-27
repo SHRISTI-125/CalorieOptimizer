@@ -203,6 +203,11 @@ This project is created for:
 
 ---
 
+# 🖼️ UI Snapshots
+<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img.png" width="440"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img1.png" width="380"/> </p>
+<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img3.png" width="420"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img7.png" width="440"/> </p>
+<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img4.png" width="425"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img5.png" width="435"/> </p>
+
 ## 🔮 Future Scope
 
 <ul>
