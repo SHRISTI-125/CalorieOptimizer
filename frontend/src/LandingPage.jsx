@@ -1,91 +1,64 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
+import "./index.css";
 
 function LandingPage() {
- const [page, setPage] = useState(null); 
+  const [page, setPage] = useState(null);
 
-
- const containerStyle = {
-  maxWidth: "2000px",
-  margin: "auto",
-  textAlign: "center",
-  minHeight: "100vh",
-  padding: "50px 20px",
-  fontFamily: 'Poppins, sans-serif',
-  color: "#e2e8f0", 
-  background: "#020617", 
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "flex-start",
- };
-
- const headingStyle = {
-  fontSize: "2.5rem",
-  color: "#60a5fa", 
-  marginBottom: "30px",
-  fontWeight: 700,
-  textShadow: "0 0 10px rgba(96, 165, 250, 0.4)",
- };
-
- const buttonContainerStyle = {
-  display: "flex",
-  gap: "20px",
-  marginTop: "20px",
-  width: "100%",
-  justifyContent: "center",
- };
-
- const buttonStyle = {
-  padding: "14px 30px",
-  borderRadius: "12px",
-  border: "none",
-  fontSize: "1.1rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  background: "#3b82f6",
-  color: "white",
-  boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
-  transition: "all 0.3s ease",
- };
-
-
- return (
-  <div style={containerStyle}>
-   {!page && (
-    <>
-     <h1 style={headingStyle}>Welcome to Calorie Optimizer </h1>
-
-
-     <h3>Track your food intake and donate surplus to needy one!</h3>
-     <br/>
-     
-     <div style={buttonContainerStyle}>
-      <button 
-       onClick={() => setPage("login")} 
-       style={buttonStyle}
-      >
-       Login
-      </button>
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-white relative overflow-hidden font-poppins px-4">
       
-      <button 
-       onClick={() => setPage("signup")} 
-       style={{
-                ...buttonStyle,
-                background: "#475569", 
-                boxShadow: "0 4px 15px rgba(71, 85, 105, 0.4)",
-       }}
-      >
-       Sign Up
-      </button>
-     </div>
-    </>
-   )}
-   {page === "login" && <Login />}
-   {page === "signup" && <Signup />}
-  </div>
- );
+      <div className="absolute top-[-15%] left-[-10%] w-[50%] h-[50%] rounded-full bg-green-100 blur-[150px] z-0" />
+      <div className="absolute bottom-[-15%] right-[-10%] w-[50%] h-[50%] rounded-full bg-green-200 blur-[150px] z-0" />
+
+      <div className="relative z-10 flex flex-col items-center max-w-2xl w-full text-center">
+        {!page && (
+          <>
+            <div className="mb-3 px-4 py-1 bg-green-100 text-green-800 text-xs font-bold uppercase tracking-widest rounded-full">
+              Health & Sustainability
+            </div>
+
+            <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 mb-6 leading-tight">Calorie{" "}<span className="relative text-green-600">Optimizer<span className="absolute left-0 -bottom-2 w-full h-1 bg-green-300 rounded-full"></span></span></h1>
+
+            <p className="text-slate-500 text-lg sm:text-xl mb-10 max-w-md leading-relaxed">
+              Smart tracking for your health. Compassionate giving for the world.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center">
+              <button
+                onClick={() => setPage("login")}
+                className="w-full sm:w-48 px-8 py-4 bg-green-600 text-white font-bold rounded-2xl shadow-lg shadow-green-200 hover:bg-green-700 hover:-translate-y-1 transition-all duration-200"
+              >
+                Login
+              </button>
+              <button
+                onClick={() => setPage("signup")}
+                className="w-full sm:w-48 px-8 py-4 bg-white text-green-600 font-bold rounded-2xl border border-green-300 shadow-sm hover:bg-green-50 hover:border-green-400 transition-all duration-200"
+              >
+                Join Now
+              </button>
+            </div>
+
+            <p className="mt-8 text-slate-400 text-sm">
+              Helping you balance health and community.
+            </p>
+          </>
+        )}
+
+        {page === "login" && (
+          <div className="w-full animate-in fade-in zoom-in duration-300">
+            <Login onBack={() => setPage(null)} />
+          </div>
+        )}
+        {page === "signup" && (
+          <div className="w-full animate-in fade-in zoom-in duration-300">
+            <Signup onBack={() => setPage(null)} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default LandingPage;

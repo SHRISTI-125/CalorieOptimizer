@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
+import "./index.css";
 
-const api = "http://127.0.0.1:5000"; 
+const api = "http://127.0.0.1:5000";
 
-export default function CaloriePredictorUnified() {
+export default function CaloriePredictor() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [textInput, setTextInput] = useState("");
@@ -10,6 +11,7 @@ export default function CaloriePredictorUnified() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const fileRef = useRef(null);
+
 
   const resetAll = () => {
     setFile(null);
@@ -20,6 +22,16 @@ export default function CaloriePredictorUnified() {
     if (fileRef.current) fileRef.current.value = null;
   };
 
+  const formatFoodName = (food) =>
+    food
+      ? food
+          .split("_")
+          .map((w) => w[0].toUpperCase() + w.slice(1))
+          .join(" ")
+      : "";
+
+      
+
   const handleFileChange = (e) => {
     const f = e.target.files[0];
     if (!f) return;
@@ -29,19 +41,24 @@ export default function CaloriePredictorUnified() {
     setError(null);
   };
 
-  const formatFoodName = (food) => {
-    if (!food) return "";
-    return food
-      .split("_")
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(" ");
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const f = e.dataTransfer.files[0];
+    if (!f) return;
+    setFile(f);
+    setPreview(URL.createObjectURL(f));
+    setResult(null);
+    setError(null);
   };
 
+  const handleDragOver = (e) => e.preventDefault();
+
+
   const predictImage = async () => {
-    if (!file) return setError("Please select an image first.");
+    if (!file) return setError("Please upload an image first.");
     setLoading(true);
-    setError(null);
     setResult(null);
+    setError(null);
 
     try {
       const fd = new FormData();
@@ -50,21 +67,19 @@ export default function CaloriePredictorUnified() {
         method: "POST",
         body: fd,
       });
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
+      setResult(await res.json());
+    } catch {
       setError("Image prediction failed.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
   const predictText = async () => {
-    if (!textInput.trim()) return setError("Please enter text first.");
+    if (!textInput.trim()) return setError("Enter food name first.");
     setLoading(true);
-    setError(null);
     setResult(null);
+    setError(null);
 
     try {
       const res = await fetch(`${api}/predictFoodFromText`, {
@@ -72,11 +87,9 @@ export default function CaloriePredictorUnified() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: textInput }),
       });
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
+      setResult(await res.json());
+    } catch {
       setError("Text prediction failed.");
-      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -85,68 +98,153 @@ export default function CaloriePredictorUnified() {
   const smartPredict = async () => {
     if (file) await predictImage();
     else if (textInput.trim()) await predictText();
-    else setError("Please provide image or text.");
+    else setError("Provide image or text.");
   };
 
+
+  const Skeleton = () => (
+    <div className="space-y-4 animate-pulse">
+      {[1, 2, 3, 4].map((i) => (
+        <div key={i} className="h-4 bg-slate-200 rounded-xl"></div>
+      ))}
+    </div>
+  );
+
+  const HealthBadge = ({ label, color }) => (
+    <span
+      className={`px-3 py-1 rounded-full text-sm font-semibold ${color}`}
+    >
+      {label}
+    </span>
+  );
+
+
+  const calories = result?.details?.calories_per_piece;
+
+  const healthStatus =
+    calories > 500
+      ? { label: "High Calories ⚠️", color: "bg-red-100 text-red-700" }
+      : calories > 250
+      ? { label: "Moderate ⚡", color: "bg-orange-100 text-orange-700" }
+      : { label: "Healthy Choice 🌿", color: "bg-green-100 text-green-700" };
+
+
   return (
-    <div style={{ padding: "40px", background: "#F3F0EE", minHeight: "100vh" }}>
-      <h1 style={{ textAlign: "center" }}>Calorie Optimizer</h1>
+    <div className="min-h-screen bg-white px-4 py-10">
+      <h1 className="text-center text-4xl font-extrabold text-slate-900 mb-10">
+        Calorie <span className="text-green-600">Optimizer</span>
+      </h1>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "40px",
-          flexWrap: "wrap",
-          marginTop: "40px",
-        }}
-      >
-      
-        <div style={{ minWidth: "280px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <input type="file" accept="image/*" ref={fileRef} onChange={handleFileChange} />
-          {preview && <img src={preview} alt="preview" style={{ width: 260, height: 260, objectFit: "cover", marginTop: 16 }} />}
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
 
+        {/* INPUT CARD */}
+        <div className="bg-white rounded-3xl shadow-xl border border-green-100 p-8">
+          <h2 className="text-2xl font-bold mb-6">Predict Calories 🌱</h2>
+
+          {/* Drag & Drop */}
+          <div
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onClick={() => fileRef.current.click()}
+            className="h-48 border-2 border-dashed border-green-400 rounded-2xl
+                       flex items-center justify-center text-green-700 font-semibold
+                       cursor-pointer hover:bg-green-50 transition"
+          >
+            {preview ? (
+              <img
+                src={preview}
+                alt="preview"
+                className="h-full w-full object-cover rounded-2xl"
+              />
+            ) : (
+              <div className="text-center">
+                <p>Drag & Drop food image</p>
+                <p className="text-sm text-slate-500">or click to upload</p>
+              </div>
+            )}
+          </div>
+
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileRef}
+            onChange={handleFileChange}
+            className="hidden"
+          />
+
+          {/* Text Input */}
           <input
             type="text"
             placeholder="Or type food name"
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
-            style={{ marginTop: 16, padding: 8, width: "100%" }}
+            className="mt-6 w-full px-4 py-3 rounded-xl border
+                       focus:ring-2 focus:ring-green-400"
           />
 
-          <div style={{ display: "flex", gap: 12, marginTop: 16 }}>
-            <button onClick={smartPredict} disabled={loading}>
-              {loading ? "Predicting..." : "Predict"}
+          {/* Buttons */}
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={smartPredict}
+              disabled={loading}
+              className="flex-1 py-3 bg-green-600 text-white font-bold
+                         rounded-xl hover:bg-green-700 disabled:opacity-60"
+            >
+              {loading ? "Analyzing..." : "Predict"}
             </button>
-            <button onClick={resetAll}>Clear</button>
+
+            <button
+              onClick={resetAll}
+              className="flex-1 py-3 border border-green-300 text-green-700
+                         rounded-xl hover:bg-green-50"
+            >
+              Clear
+            </button>
           </div>
 
-          {error && <p style={{ color: "red", marginTop: 12 }}>{error}</p>}
+          {error && (
+            <p className="mt-4 text-red-500 text-center">{error}</p>
+          )}
         </div>
 
-        <div style={{ minWidth: 300 }}>
-          {result ? (
-            <div style={{ background: "#fadeefff", padding: 20, borderRadius: 12 }}>
-              <h3>{formatFoodName(result.predicted_food)}</h3>
-              <p>Calories: {result.details?.calories_per_piece ?? "N/A"}</p>
-              {result.details?.nutrients && (
-                <div>
-                  <p>Sugar: {result.details.nutrients.sugar ?? "N/A"}</p>
-                  <p>Fat: {result.details.nutrients.total_fat ?? "N/A"}</p>
-                  <p>Cholestrol: {result.details.nutrients.cholestrol ?? "N/A"}</p>
-                </div>
-              )}
-              {result.details?.category && <p>Category: {result.details.category}</p>}
-              {result.details?.description && <p>Description: {result.details.description}</p>}
-              {result.details?.bad_for && <p>Not good for: {result.details.bad_for.join(", ")}</p>}
-              {result.details?.alternative && <p>Alternative: {result.details.alternative}</p>}
-            </div>
+        {/* RESULT CARD */}
+        <div className="bg-white rounded-3xl shadow-xl border border-green-100 p-8">
+          {loading ? (
+            <Skeleton />
+          ) : result ? (
+            <>
+              <h2 className="text-2xl font-extrabold text-green-700 mb-3">
+                {formatFoodName(result.predicted_food)}
+              </h2>
+
+              <HealthBadge {...healthStatus} />
+
+              <div className="mt-4 space-y-2 text-slate-700">
+                <p><strong>Calories:</strong> {calories}</p>
+                <p><strong>Sugar:</strong> {result.details?.nutrients?.sugar}</p>
+                <p><strong>Fat:</strong> {result.details?.nutrients?.total_fat}</p>
+                <p><strong>Cholesterol:</strong> {result.details?.nutrients?.cholestrol}</p>
+
+                {result.details?.bad_for && (
+                  <p className="text-red-600">
+                     Not good for: {result.details.bad_for.join(", ")}
+                  </p>
+                )}
+
+                {result.details?.alternative && (
+                  <p className="text-green-700">
+                     Better alternative: {result.details.alternative}
+                  </p>
+                )}
+              </div>
+            </>
           ) : (
-            <div style={{ padding: 20, background: "#fff", textAlign: "center" }}>
-              Provide an image or type text to predict.
+            <div className="h-full flex items-center justify-center text-slate-400">
+              Upload an image or type food name to see prediction.
             </div>
           )}
         </div>
+
       </div>
     </div>
   );

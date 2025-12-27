@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 function Signup() {
-// --- Food List extracted from your backend dictionary (used for dropdown options) ---
-const food101List = [
+  const food101List = [
     "apple_pie", "baby_back_ribs", "baklava", "beef_carpaccio", "beef_tartare",
     "beet_salad", "beignets", "bibimbap", "bread_pudding", "breakfast_burrito",
     "bruschetta", "caesar_salad", "cannoli", "caprese_salad", "carrot_cake",
@@ -27,322 +27,181 @@ const food101List = [
     "waffles"
 ];
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    age: "",
+    gender: "",
+    weight: "",
+    height: "",
+    activity_level: "Sedentary",
+    goal: "",
+    today_food_intake: ""
+  });
 
-const [formData, setFormData] = useState({ 
-  name: "", 
-  email: "", 
-  password: "", 
-  age: "", 
-  gender: "", 
-  weight: "", 
-  height: "", 
-  activity_level: "Sedentary", 
-  goal: "",
-  today_food_intake: "" 
-});
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isSuccessful, setIsSuccessful] = useState(false);
 
-const [message, setMessage] = useState("");
-const [errors, setErrors] = useState({});
-const [isSuccessful, setIsSuccessful] = useState(false); 
+  const handleChange = (e) => {
+    const { name, value, selectedOptions } = e.target;
 
-
-const handleChange = (e) => {
-  const { name, value, selectedOptions } = e.target;
-    
-  if (name === 'today_food_intake') {
-      const selectedValues = Array.from(selectedOptions, option => option.value);
-      setFormData({ ...formData, [name]: selectedValues.join(',') });
-  } else {
-      setFormData({...formData, [name]: value });
-  }
-};
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage("");
-  setErrors({});
-  setIsSuccessful(false); 
-
-  try {
-  const response = await axios.post("http://localhost:5000/signup", formData);
-  
-  const target = response.data.daily_calorie_target;
-  const consumed = response.data.total_calories || 0;
-  
-  setMessage(`Account created successfully! Your Daily Calorie Target is: ${target} kcal. You logged ${consumed} kcal today.`);
-  setIsSuccessful(true); 
-  
-  } catch (err) {
-  if (err.response && err.response.data.error) {
-    const backendErrors = err.response.data.error; 
-    
-    if (typeof backendErrors === 'object' && !Array.isArray(backendErrors)) {
-        setErrors(backendErrors);
+    if (name === "today_food_intake") {
+      const selected = Array.from(selectedOptions, o => o.value);
+      setFormData({ ...formData, [name]: selected.join(",") });
     } else {
-        setMessage(backendErrors.email || "Signup failed. Please check the data.");
+      setFormData({ ...formData, [name]: value });
     }
-
-  } else {
-    setMessage("Signup failed. Please check your network or try again.");
-  }
-  }
-};
-  
-  const handleLoginRedirect = () => {
-    window.location.href = "/login"; 
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+    setMessage("");
 
-// --- Inline Styles Definitions ---
+    try {
+      const res = await axios.post("http://localhost:5000/signup", formData);
+      setMessage(
+        `Account created! Daily target: ${res.data.daily_calorie_target} kcal`
+      );
+      setIsSuccessful(true);
+    } catch (err) {
+      setMessage("Signup failed. Please check details.");
+    }
+  };
 
-const containerStyle = {
-  maxWidth: "450px",
-  margin: "auto",
-  padding: "40px",
-  backgroundColor: "#111827", 
-  borderRadius: "20px",
-  boxShadow: "0 10px 30px rgba(0, 0, 0, 0.6)",
-  color: "#e2e8f0",
-  fontFamily: 'Poppins, sans-serif',
-};
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-white px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-8"
+      >
+        <h2 className="text-2xl font-bold text-emerald-600 text-center mb-6">
+          Create Your Account 🌿
+        </h2>
 
-const headingStyle = {
-  fontSize: "1.8rem",
-  color: "#60a5fa", 
-  marginBottom: "25px",
-  fontWeight: 700,
-  textAlign: "center",
-};
+        {!isSuccessful ? (
+          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+            {["name", "email", "password"].map((field) => (
+              <div key={field} className="col-span-2">
+                <label className="text-sm font-medium text-slate-600 capitalize">
+                  {field}
+                </label>
+                <input
+                  type={field === "password" ? "password" : "text"}
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full mt-1 px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-400 outline-none"
+                />
+              </div>
+            ))}
 
-const formStyle = {
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr", 
-  gap: "15px",
-};
+            {["age", "weight", "height"].map((field) => (
+              <div key={field}>
+                <label className="text-sm text-slate-600 capitalize">
+                  {field}
+                </label>
+                <input
+                  type="number"
+                  name={field}
+                  value={formData[field]}
+                  onChange={handleChange}
+                  className="w-full mt-1 px-4 py-2 rounded-xl border border-slate-200 focus:ring-2 focus:ring-emerald-400"
+                />
+              </div>
+            ))}
 
-const inputContainerStyle = {
-  marginBottom: "0", 
-  gridColumn: "span 2", 
-};
-
-const halfWidthStyle = {
-  ...inputContainerStyle,
-  gridColumn: "span 1", 
-};
-
-
-const inputStyle = {
-  width: "100%",
-  padding: "12px 15px",
-  border: "none",
-  borderRadius: "10px",
-  backgroundColor: "#0f172a", 
-  color: "#e2e8f0",
-  fontSize: "0.95rem",
-  boxShadow: "inset 4px 4px 8px #020617, inset -4px -4px 8px #1f2937",
-  transition: "box-shadow 0.3s ease",
-};
-
-const selectStyle = {
-    ...inputStyle,
-    appearance: 'none', 
-    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'right 15px center',
-    backgroundSize: '1em',
-    paddingRight: '35px', 
-};
-
-const multiSelectStyle = {
-    ...inputStyle,
-    height: '150px', 
-    padding: '10px',
-    appearance: 'auto',
-};
-
-const labelStyle = {
-  display: "block",
-  marginBottom: "5px",
-  color: "#94a3b8", 
-  fontSize: "0.9rem",
-  fontWeight: 500,
-  textAlign: "left",
-};
-
-const errorStyle = {
-  color: "#f87171", 
-  fontSize: "0.8rem",
-  marginTop: "5px",
-  textAlign: "left",
-};
-
-const buttonStyle = {
-  padding: "14px 25px",
-  borderRadius: "12px",
-  border: "none",
-  fontSize: "1.1rem",
-  fontWeight: 600,
-  cursor: "pointer",
-  marginTop: "20px",
-  background: "#3b82f6", 
-  color: "white",
-  boxShadow: "0 6px 20px rgba(59, 130, 246, 0.4)",
-  transition: "all 0.3s ease",
-  width: "100%",
-  gridColumn: "span 2", 
-};
-
-const messageStyle = {
-  color: "#34d399", 
-  backgroundColor: "#153e24",
-  padding: "12px",
-  borderRadius: "8px",
-  marginTop: "25px",
-  textAlign: "center",
-  fontWeight: 500,
-};
-
-const loginButtonStyle = {
-    ...buttonStyle,
-    marginTop: "25px",
-    background: "#10b981", 
-    boxShadow: "0 6px 20px rgba(16, 185, 129, 0.5)",
-}
-
-// --- Dropdown Options ---
-const genderOptions = ["Male", "Female", "Other"];
-const activityOptions = [
-    { value: "Sedentary", label: "Sedentary (little or no exercise)" },
-    { value: "Lightly Active", label: "Lightly Active (1-3 days/week)" },
-    { value: "Moderately Active", label: "Moderately Active (3-5 days/week)" },
-    { value: "Very Active", label: "Very Active (6-7 days/week)" },
-    { value: "Super Active", label: "Super Active (daily intense exercise)" },
-];
-
-
-return (
-  <div style={containerStyle}>
-  <h2 style={headingStyle}>Create Your Account </h2>
-  
-    {!isSuccessful ? (
-      <form onSubmit={handleSubmit} style={formStyle}>
-        
-        {/* Render standard input fields */}
-        {['name', 'email', 'password', 'age', 'weight', 'height'].map((field) => {
-          const label = field.charAt(0).toUpperCase() + field.slice(1).replace(/_level/, ' Level');
-          const type = field === "password" || field === "email" ? field : (["age", "weight", "height"].includes(field) ? "number" : "text");
-          const placeholder = (field === 'age' ? 'Years' : field === 'weight' ? 'kg' : field === 'height' ? 'cm' : label);
-          
-          const currentInputContainerStyle = (['age', 'weight', 'height'].includes(field)) ? halfWidthStyle : inputContainerStyle;
-
-          return (
-            <div key={field} style={currentInputContainerStyle}>
-              <label style={labelStyle}>{label}</label>
-              <input 
-                type={type} 
-                name={field} 
-                value={formData[field]} 
-                onChange={handleChange} 
-                style={inputStyle}
-                placeholder={placeholder}
-                min={type === 'number' ? 1 : null} 
-              />
-              {errors[field] && <p style={errorStyle}>{errors[field]}</p>}
-            </div>
-          )
-        })}
-
-        {/* --- Gender Dropdown --- */}
-        <div style={halfWidthStyle}>
-            <label style={labelStyle}>Gender</label>
-            <select
+            <div>
+              <label className="text-sm text-slate-600">Gender</label>
+              <select
                 name="gender"
                 value={formData.gender}
                 onChange={handleChange}
-                style={selectStyle}
-            >
-                <option value="" disabled>Select Gender</option>
-                {genderOptions.map(option => (
-                    <option key={option} value={option.toLowerCase()}>{option}</option>
-                ))}
-            </select>
-            {errors['gender'] && <p style={errorStyle}>{errors['gender']}</p>}
-        </div>
+                className="w-full mt-1 px-4 py-2 rounded-xl border border-slate-200"
+              >
+                <option value="">Select</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
 
-        {/* --- Activity Level Dropdown --- */}
-        <div style={halfWidthStyle}>
-            <label style={labelStyle}>Activity Level</label>
-            <select
+            <div>
+              <label className="text-sm text-slate-600">Activity</label>
+              <select
                 name="activity_level"
                 value={formData.activity_level}
                 onChange={handleChange}
-                style={selectStyle}
-            >
-                <option value="" disabled>Select Activity</option>
-                {activityOptions.map(option => (
-                    <option key={option.value} value={option.value}>{option.label}</option>
+                className="w-full mt-1 px-4 py-2 rounded-xl border border-slate-200"
+              >
+                <option>Sedentary</option>
+                <option>Lightly Active</option>
+                <option>Moderately Active</option>
+                <option>Very Active</option>
+              </select>
+            </div>
+
+            <div className="col-span-2">
+              <label className="text-sm text-slate-600">Goal</label>
+              <input
+                name="goal"
+                value={formData.goal}
+                onChange={handleChange}
+                placeholder="Lose weight / Maintain"
+                className="w-full mt-1 px-4 py-2 rounded-xl border border-slate-200"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="text-sm text-slate-600">
+                Today's Food Intake
+              </label>
+              <select
+                multiple
+                name="today_food_intake"
+                onChange={handleChange}
+                className="w-full mt-1 h-32 px-3 py-2 rounded-xl border border-slate-200"
+              >
+                {food101List.map((food) => (
+                  <option key={food} value={food}>
+                    {food.replace(/_/g, " ").toUpperCase()}
+                  </option>
                 ))}
-            </select>
-            {errors['activity_level'] && <p style={errorStyle}>{errors['activity_level']}</p>}
-        </div>
+              </select>
+            </div>
 
-        {/* --- Goal Input --- */}
-        <div style={inputContainerStyle}>
-            <label style={labelStyle}>Goal</label>
-            <input 
-                type="text" 
-                name="goal" 
-                value={formData.goal} 
-                onChange={handleChange} 
-                style={inputStyle}
-                placeholder="e.g., Maintain Weight, Lose Weight"
-            />
-            {errors['goal'] && <p style={errorStyle}>{errors['goal']}</p>}
-        </div>
-        
-        {/* ---Today's Food Intake MULTI-SELECT Dropdown --- */}
-        <div style={inputContainerStyle}>
-            <label style={labelStyle}>Today's Initial Food Intake (Optional)</label>
-            <select 
-                name="today_food_intake" 
-                onChange={handleChange} 
-                style={multiSelectStyle}
-                multiple={true} 
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="col-span-2 mt-4 bg-emerald-500 text-white py-3 rounded-xl font-semibold shadow-md"
             >
-                <option value="" disabled>Select food items (Ctrl/Cmd + click)</option>
-                {food101List.map(food => (
-                    <option key={food} value={food}>
-                        {food.replace(/_/g, ' ').toUpperCase()}
-                    </option>
-                ))}
-            </select>
-            <p style={{...errorStyle, color: '#94a3b8', marginTop: '10px'}}>
-                *Hold Ctrl or Cmd to select multiple items. Calories will be calculated for one serving of each.
+              Save Details
+            </motion.button>
+          </form>
+        ) : (
+          <motion.div
+            initial={{ scale: 0.9 }}
+            animate={{ scale: 1 }}
+            className="text-center"
+          >
+            <p className="bg-emerald-50 text-emerald-700 p-4 rounded-xl">
+              {message}
             </p>
-            {errors['today_food_intake'] && <p style={errorStyle}>{errors['today_food_intake']}</p>}
-        </div>
-
-        <button type="submit" style={buttonStyle}>
-          Save Details!
-        </button>
-      </form>
-    ) : (
-        <div style={{textAlign: "center"}}>
-            {message && <p style={messageStyle}>{message}</p>}
-            
-            <p style={{color: "#94a3b8", fontSize: "1rem", marginTop: "20px"}}>
-                Your account is ready! Please proceed to log in.
-            </p>
-
-            <button onClick={handleLoginRedirect} style={loginButtonStyle}>
-                Go to Login Page 
+            <button
+              onClick={() => (window.location.href = "/login")}
+              className="mt-6 bg-emerald-500 text-white px-6 py-3 rounded-xl font-semibold"
+            >
+              Go to Login
             </button>
-        </div>
-    )}
-  
-  </div>
-);
+          </motion.div>
+        )}
+      </motion.div>
+    </div>
+  );
 }
 
 export default Signup;

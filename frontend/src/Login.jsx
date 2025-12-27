@@ -1,114 +1,141 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Login.css";
+import "./index.css";
 
-function Login() {
- const [formData, setFormData] = useState({
-  name: "",
-  password: "",
-  remember: false
- });
-
- const [message, setMessage] = useState("");
- const [errors, setErrors] = useState({});
-
- const handleChange = (e) => {
-  const { name, value, type, checked } = e.target;
-  setFormData({
-   ...formData,
-   [name]: type === "checkbox" ? checked : value
+function Login({ onBack }) {
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+    remember: false,
   });
- };
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
-  setMessage(""); 
-  setErrors({});
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
 
-  try {
-   const res = await axios.post("http://localhost:5000/login", formData);
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
 
-   console.log("Login Response:", res.data);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setErrors({});
 
-   if (res.data.user) {
-    localStorage.setItem("user", JSON.stringify(res.data.user));
-   }
+    try {
+      const res = await axios.post("http://localhost:5000/login", formData);
 
-   setMessage("Login successful!");
+      if (res.data.user) {
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      }
 
-   setTimeout(() => {
-    window.location.href = "/profile";
-   }, 700);
+      setMessage("Login successful!");
 
-  } catch (err) {
-   console.log("Login error:", err);
-      
-      const genericErrorMessage = "Login failed. Please check your credentials.";
+      setTimeout(() => {
+        window.location.href = "/profile";
+      }, 700);
+    } catch (err) {
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors);
+      } else {
+        setMessage("Invalid credentials. Please try again.");
+      }
+    }
+  };
 
-   if (err.response) {
-    if (err.response.data.errors) {
-     setErrors(err.response.data.errors);
-          setMessage(""); 
-        } else if (err.response.data.message) {
-          setMessage(err.response.data.message);
-        } else {
-          setMessage(genericErrorMessage);
-        }
-   } else {
-    setMessage("Network error. Could not connect to the server.");
-   }
-  }
- };
+  return (
+    <div className="w-full flex justify-center">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-green-100">
+        
+        {/* Header */}
+        <div className="mb-6 text-center">
+          <h2 className="text-3xl font-extrabold text-slate-900">
+            Welcome Back 🌱
+          </h2>
+          <p className="text-slate-500 mt-2">
+            Login to continue your journey
+          </p>
+        </div>
 
-
- return (
-  <div className="login-container">
-      <div className="login-card">
-     <h2>Sign In 👋</h2>
-
-     <form onSubmit={handleSubmit} className="login-form">
-      <input 
-              name="name" 
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <input
+              name="name"
               type="text"
-              placeholder="Username" 
-              value={formData.name} 
+              placeholder="Username"
+              value={formData.name}
               onChange={handleChange}
-      />
-      {errors.name && <p className="error-text">{errors.name}</p>}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+            {errors.name && (
+              <p className="text-red-500 text-sm mt-1">{errors.name}</p>
+            )}
+          </div>
 
-      <input 
-              name="password" 
-              type="password" 
-              placeholder="Password" 
-              value={formData.password} 
+          <div>
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              value={formData.password}
               onChange={handleChange}
-      />
-      {errors.password && <p className="error-text">{errors.password}</p>}
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-green-400"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
+          </div>
 
-      <label className="remember-label">
-       <input 
-                type="checkbox" 
-                name="remember" 
-                checked={formData.remember} 
+          <div className="flex items-center justify-between text-sm">
+            <label className="flex items-center gap-2 text-slate-600">
+              <input
+                type="checkbox"
+                name="remember"
+                checked={formData.remember}
                 onChange={handleChange}
-       />
-       Keep me logged in
-      </label>
+                className="accent-green-600"
+              />
+              Remember me
+            </label>
+          </div>
 
-      <button type="submit" className="login-btn">
-              Login
+          <button
+            type="submit"
+            className="w-full py-3 bg-green-600 text-white font-bold rounded-xl shadow-lg shadow-green-200 hover:bg-green-700 hover:-translate-y-0.5 transition-all"
+          >
+            Login
           </button>
-     </form>
+        </form>
 
-     {message && (
-            <p className={`status-message ${message.toLowerCase().includes("fail") || message.toLowerCase().includes("error") || message.toLowerCase().includes("check") ? 'error' : ''}`}>
-                {message}
-            </p>
+        {/* Message */}
+        {message && (
+          <p
+            className={`mt-4 text-center text-sm font-medium ${
+              message.toLowerCase().includes("success")
+                ? "text-green-600"
+                : "text-red-500"
+            }`}
+          >
+            {message}
+          </p>
         )}
-    </div>
-  </div>
- );
-}
 
+        {/* Back */}
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="mt-6 w-full text-sm text-green-600 hover:underline"
+          >
+            ← Back to Home
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default Login;

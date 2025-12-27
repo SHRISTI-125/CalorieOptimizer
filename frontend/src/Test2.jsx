@@ -1,10 +1,11 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef } from "react";
+/*import Test from "./Test";*/
+/*import "./Predictor.css";*/
 import Test from "./Test";
-import "./Predictor.css";
 
 const api = "http://127.0.0.1:5000";
 
-function Test2() {
+export default function Test2() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
   const [textInput, setTextInput] = useState("");
@@ -23,175 +24,150 @@ function Test2() {
     if (fileRef.current) fileRef.current.value = null;
   };
 
+  const formatText = (t = "") =>
+    t.split("_").map(w => w[0]?.toUpperCase() + w.slice(1)).join(" ");
+
   const handleFileChange = (e) => {
     const f = e.target.files[0];
     if (!f) return;
     setFile(f);
     setPreview(URL.createObjectURL(f));
-    setResult(null);
     setError(null);
   };
 
-  const formatFoodName = (food) => {
-    if (!food) return "";
-    return food
-      .split("_")
-      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-      .join(" ");
-  };
-
-  const predictImage = async () => {
-    if (!file) return setError("Please select an image first.");
+  const predict = async () => {
+    if (!file && !textInput.trim()) {
+      return setError("Upload image or enter food name");
+    }
 
     setLoading(true);
-    setError(null);
     setResult(null);
+    setError(null);
 
     try {
-      const fd = new FormData();
-      fd.append("image", file);
-
-      const res = await fetch(`${api}/predictFoodName`, {
-        method: "POST",
-        body: fd,
-      });
-
-      const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      console.error(err);
-      setError(err.message || "Image prediction failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const predictText = async () => {
-    if (!textInput.trim()) return setError("Please enter food name.");
-
-    setLoading(true);
-    setError(null);
-    setResult(null);
-
-    try {
-      const res = await fetch(`${api}/predictFoodFromText`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: textInput }),
-      });
+      const res = file
+        ? await fetch(`${api}/predictFoodName`, {
+            method: "POST",
+            body: (() => {
+              const fd = new FormData();
+              fd.append("image", file);
+              return fd;
+            })(),
+          })
+        : await fetch(`${api}/predictFoodFromText`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: textInput }),
+          });
 
       const data = await res.json();
-      setResult(data);
-    } catch (err) {
-      console.error(err);
-      setError(err.message || "Text prediction failed.");
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  const smartPredict = async () => {
-    if (file) await predictImage();
-    else if (textInput.trim()) await predictText();
-    else setError("Please provide an image or food name.");
-  };
-
-  /* FINAL FORMATTED RESULT */
-  const formattedResult = result
-    ? {
-        food: formatFoodName(result.predicted_food),
-        calories: result.details?.calories_per_piece || 0,
-
-        nutrients: result.details?.nutrients
-          ? Object.entries(result.details.nutrients).map(([key, value]) => ({
-              name: formatFoodName(key),
-              value: value,
+      setResult({
+        food: formatText(data.predicted_food),
+        calories: data.details?.calories_per_piece || 0,
+        category: data.details?.category || "Unknown",
+        description: data.details?.description || "No description available",
+        nutrients: data.details?.nutrients
+          ? Object.entries(data.details.nutrients).map(([k, v]) => ({
+              name: formatText(k),
+              value: v,
             }))
           : [],
-
-        risk: result.details?.bad_for?.length
-          ? result.details.bad_for.join(", ")
-          : "No major risks",
-
+        risk:
+          data.details?.bad_for?.length
+            ? data.details.bad_for.join(", ")
+            : "No major risks detected",
         alternative:
-          result.details?.alternative || "No healthier alternative available",
-
-        category: result.details?.category || "Not specified",
-
-        description: result.details?.description || "No description available",
-      }
-    : null;
+          data.details?.alternative || "No healthier alternative suggested",
+      });
+    } catch {
+      setError("Prediction failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="predictor-container">
-    <h1 
-  className="main-heading" 
-  style={{
-    fontSize: '2.5rem', 
-    color: '#eef0f2ff', // Blue accent color
-    marginBottom: '30px', 
-    fontWeight: 700,
-    textShadow: '0 0 10px rgba(96, 165, 250, 0.4)', // Subtle blue glow
-    textDecoration: 'none' 
-  }}
->
-   Calorie Optimizer
-</h1>
-      
-      <div className="predictor-grid">
-        <div className="input-panel">
+    <div className="min-h-screen bg-gradient-to-b from-white to-green-50 px-6 py-10">
+      <h1 className="text-center text-4xl font-extrabold text-slate-900 mb-10">
+        Calorie <span className="text-green-600">Optimizer</span>
+      </h1>
 
-          <div className="upload-box" onClick={() => fileRef.current.click()}>
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
+        {/* INPUT CARD */}
+        <div className="bg-white rounded-3xl border border-green-100 shadow-xl p-8">
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">
+            Predict Nutrition 🌱
+          </h2>
+
+          <div
+            onClick={() => fileRef.current.click()}
+            className="cursor-pointer border-2 border-dashed border-green-300 rounded-2xl h-56 flex items-center justify-center text-slate-400 hover:bg-green-50 transition"
+          >
             {preview ? (
-              <img src={preview} alt="preview" className="preview-image" />
+              <img src={preview} alt="preview" className="h-full object-cover rounded-2xl" />
             ) : (
-              <p>Click or Upload Food Image</p>
+              <p>Click or Drag & Drop food image</p>
             )}
           </div>
 
           <input
-            type="file"
-            accept="image/*"
             ref={fileRef}
-            onChange={handleFileChange}
+            type="file"
             hidden
+            accept="image/*"
+            onChange={handleFileChange}
           />
 
           <input
-            type="text"
-            className="food-input"
-            placeholder="Type your food name here..."
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
+            placeholder="Or type food name"
+            className="mt-6 w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
           />
 
-          <div className="button-group">
-            <button onClick={smartPredict} disabled={loading}>
+          <div className="flex gap-4 mt-6">
+            <button
+              onClick={predict}
+              disabled={loading}
+              className="flex-1 bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition disabled:opacity-60"
+            >
               {loading ? "Analyzing..." : "Predict"}
             </button>
-
-            <button className="secondary" onClick={resetAll}>
+            <button
+              onClick={resetAll}
+              className="flex-1 border border-green-300 text-green-700 py-3 rounded-xl font-bold hover:bg-green-50"
+            >
               Clear
             </button>
           </div>
 
-          {error && <p className="error-text">{error}</p>}
-        </div>
-
-        <div className="result-panel">
-          {formattedResult ? (
-            <Test result={formattedResult} />
-          ) : (
-            <div className="no-result-box">
-              <h2>Waiting for input...</h2>
-              <p>Upload an image or type a food name</p>
-            </div>
+          {error && (
+            <p className="mt-4 text-center text-red-500 font-medium">
+              {error}
+            </p>
           )}
         </div>
 
+        {/* RESULT CARD */}
+        <div className="bg-white rounded-3xl border border-green-100 shadow-xl p-8">
+          {loading && (
+            <div className="animate-pulse space-y-4">
+              <div className="h-6 bg-green-100 rounded w-1/2" />
+              <div className="h-40 bg-green-50 rounded" />
+              <div className="h-4 bg-green-100 rounded w-3/4" />
+            </div>
+          )}
+
+          {!loading && result && <Test result={result} />}
+
+          {!loading && !result && (
+            <p className="text-slate-400 text-center">
+              Upload an image or type food name to start
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );
 }
-
-export default Test2;

@@ -1,510 +1,255 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-const HEADER_IMAGE = "/mnt/data/0c454720-ef2e-4504-b8ef-4c9cea6503b5.png";
+// Helper
+const capitalize = (s = "") => s.charAt(0).toUpperCase() + s.slice(1);
 
-const capitalizeFirst = (str = "") => (str ? str.charAt(0).toUpperCase() + str.slice(1) : "");
-
-// Skeleton component
-const SkeletonLoader = () => (
-  <div style={styles.resultBox}>
-    <div style={styles.skeletonHeader}></div>
-    <div style={styles.skeletonTitle}></div>
-    <div style={styles.skeletonTime}></div>
-    <div style={styles.skeletonSection}>
-      <div style={styles.skeletonText}></div>
-      <div style={styles.skeletonText}></div>
+// Skeleton loader
+const Skeleton = () => (
+  <div className="mt-6 space-y-4 animate-pulse">
+    <div className="h-32 bg-green-50 rounded-xl" />
+    <div className="h-5 w-1/2 bg-green-100 rounded" />
+    <div className="h-4 w-32 bg-green-100 rounded" />
+    <div className="grid grid-cols-2 gap-3">
+      <div className="h-10 bg-green-50 rounded-lg" />
+      <div className="h-10 bg-green-50 rounded-lg" />
     </div>
   </div>
 );
 
-export function RecipeCard() {
+// Calculate health badge
+const getHealthBadge = (nutrients = []) => {
+  let sugar = 0;
+  let fat = 0;
+  nutrients.forEach((n) => {
+    if (n.name.toLowerCase().includes("sugar")) sugar = parseInt(n.value);
+    if (n.name.toLowerCase().includes("fat")) fat = parseInt(n.value);
+  });
+
+  if (sugar >= 20 || fat >= 15) return { label: "UNHEALTHY", color: "red" };
+  if (sugar >= 10 || fat >= 8) return { label: "MODERATE", color: "orange" };
+  return { label: "HEALTHY", color: "green" };
+};
+
+export default function RecipeCard() {
   const [ingredients, setIngredients] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [savedRecipes, setSavedRecipes] = useState(() => {
+  const [saved, setSaved] = useState([]);
+
+  useEffect(() => {
     try {
-      return JSON.parse(localStorage.getItem("savedRecipes")) || [];
+      setSaved(JSON.parse(localStorage.getItem("savedRecipes")) || []);
     } catch {
-      return [];
+      setSaved([]);
     }
-  });
-  const [isSaved, setIsSaved] = useState(false);
-
-  useEffect(() => {
-    if (result) {
-      setIsSaved(savedRecipes.some((r) => r.recipe_name === result.recipe_name));
-    } else {
-      setIsSaved(false);
-    }
-  }, [result, savedRecipes]);
-
-  
-  useEffect(() => {
-    const fontLink = document.createElement("link");
-    fontLink.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap";
-    fontLink.rel = "stylesheet";
-    document.head.appendChild(fontLink);
-
-    
-    const style = document.createElement("style");
-    style.innerHTML = `
-      @keyframes cardSlide { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes pop { 0% { transform: scale(0.9); opacity: 0 } 100% { transform: scale(1); opacity: 1 } }
-      @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(12px) } 100% { opacity: 1; transform: translateY(0) } }
-      /* subtle background animation */
-      @keyframes bgPulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
-    `;
-    document.head.appendChild(style);
-
-    return () => {
-      document.head.removeChild(fontLink);
-      document.head.removeChild(style);
-    };
   }, []);
+
+  const isSaved = result && saved.some((r) => r.recipe_name === result.recipe_name);
 
   const getRecipe = async () => {
     if (!ingredients.trim()) {
-      setError("Please enter ingredients first.");
+      setError("Please enter ingredients");
       return;
     }
 
     setLoading(true);
-    setResult(null);
     setError("");
+    setResult(null);
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/recommend", {
+      const res = await fetch("http://127.0.0.1:5000/recommend", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ingredients }),
       });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.error || "Something went wrong.");
-      } else {
-        setResult(data);
-      }
-    } catch (err) {
-      console.error("Fetch error:", err);
-      setError("Cannot connect to backend. Make sure Flask is running.");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setResult(data);
+    } catch (e) {
+      setError(e.message || "Backend not reachable");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSave = () => {
+  const toggleSave = () => {
     if (!result) return;
     const updated = isSaved
-      ? savedRecipes.filter((r) => r.recipe_name !== result.recipe_name)
-      : [...savedRecipes, result];
-    setSavedRecipes(updated);
-    try {
-      localStorage.setItem("savedRecipes", JSON.stringify(updated));
-    } catch (e) {
-      console.warn("Unable to save to localStorage", e);
-    }
-    setIsSaved(!isSaved);
+      ? saved.filter((r) => r.recipe_name !== result.recipe_name)
+      : [...saved, result];
+    setSaved(updated);
+    localStorage.setItem("savedRecipes", JSON.stringify(updated));
   };
 
-  const handleShare = () => {
-    if (!result) return;
-    if (navigator.share) {
-      navigator
-        .share({
-          title: result.recipe_name,
-          text: `Check out this recipe: ${result.recipe_name}`,
-          url: window.location.href,
-        })
-        .catch((e) => console.warn("Share failed", e));
-    } else {
-      try {
-        navigator.clipboard.writeText(`${window.location.href} - ${result.recipe_name}`);
-        alert("Link copied to clipboard.");
-      } catch {
-        alert("Sharing not supported on this device.");
-      }
-    }
-  };
+  const healthBadge = result ? getHealthBadge(result.nutrients || []) : null;
 
   return (
-    <div style={styles.page}>
-      <div style={styles.card}>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-100 px-6 py-12">
+      <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-xl border border-green-100 p-8">
 
-        <header style={styles.headerRow}>
-          <div>
-            <h2 style={styles.title}>Recipe Generator</h2>
-            <p style={styles.subtitle}>Type ingredients and fetch a recipe instantly</p>
-          </div>
-        </header>
+        {/* HEADER */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-extrabold text-green-700">
+            Recipe Generator
+          </h1>
+          <p className="text-slate-500 mt-2">
+            Enter ingredients & get instant recipes
+          </p>
+        </div>
 
-        {/* input */}
-        <div style={styles.inputGroup}>
+        {/* INPUT */}
+        <div className="flex gap-3">
           <input
-            aria-label="ingredients"
-            type="text"
-            placeholder="e.g., garlic, wheat, sugar"
+            className="flex-1 px-4 py-3 rounded-xl border border-green-200
+              focus:ring-2 focus:ring-green-400 outline-none"
+            placeholder="e.g. tomato, onion, rice"
             value={ingredients}
             onChange={(e) => setIngredients(e.target.value)}
-            style={styles.input}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") getRecipe();
-            }}
+            onKeyDown={(e) => e.key === "Enter" && getRecipe()}
           />
           <button
             onClick={getRecipe}
             disabled={loading}
-            style={styles.button}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px) scale(1.02)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0) scale(1)";
-            }}
+            className="px-6 py-3 rounded-xl bg-green-600 text-white font-bold
+              hover:bg-green-700 transition disabled:opacity-60"
           >
-            {loading ? "Searching..." : "Fetch Recipe"}
+            {loading ? "Loading..." : "Generate"}
           </button>
         </div>
 
-        <p style={styles.helperText}>Separate ingredients with or without commas. Press Enter to fetch.</p>
+        {error && (
+          <p className="mt-4 text-center text-red-500 font-medium">{error}</p>
+        )}
 
-        {error && <div style={styles.error}>{error}</div>}
+        {loading && <Skeleton />}
 
-        {/* loading */}
-        {loading && <SkeletonLoader />}
-
-        {/* empty */}
         {!loading && !result && !error && (
-          <div style={styles.emptyState}>Enter ingredients to fetch a recipe</div>
+          <div className="mt-8 text-center text-slate-400">
+            Enter ingredients to see magic ✨
+          </div>
         )}
 
-        {/* result card */}
+        {/* RESULT */}
         {result && !loading && (
-          <article style={styles.resultBox}>
-            {/* Glass header with subtle image texture + fetched title */}
-            <div style={{ ...styles.glassHeader, backgroundImage: `linear-gradient(135deg, rgba(79,70,229,0.35), rgba(34,211,238,0.2)), url("${HEADER_IMAGE}")` }}>
-              <div style={styles.glassHeaderOverlay}>
-                <h3 style={styles.headerRecipeTitle}>
-                  {capitalizeFirst(result.recipe_name) || "Fetched recipe"}
-                </h3>
-                <div style={styles.headerMeta}>
-                  <span style={styles.timeBadge}>⏱ {result.cook_time_minutes} mins</span>
-                  <div style={styles.smallBadges}>
-                    <span style={styles.smallBadge}>Easy</span>
-                    <span style={styles.smallBadge}>Quick</span>
-                  </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mt-10 space-y-8"
+          >
+
+            {/* TITLE CARD */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="p-6 rounded-2xl bg-gradient-to-r from-green-100 to-green-50 border border-green-200 shadow"
+            >
+              <div className="flex justify-between items-center">
+                <div>
+                  <h2 className="text-2xl font-bold text-green-800">
+                    {capitalize(result.recipe_name)}
+                  </h2>
+                  <p className="text-sm text-slate-600 mt-1">
+                    ⏱ {result.cook_time_minutes} minutes
+                  </p>
                 </div>
+                <button
+                  onClick={toggleSave}
+                  className="text-green-700 font-semibold hover:scale-105 transition"
+                >
+                  {isSaved ? "💚 Saved" : "♡ Save"}
+                </button>
+              </div>
+            </motion.div>
+
+            {/* NUTRITION BADGES */}
+            {result.nutrients && (
+              <div className="flex flex-wrap gap-2">
+                {result.nutrients.map((nutrient, idx) => (
+                  <motion.span
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="px-3 py-1 bg-green-50 border border-green-200 rounded-full text-sm font-semibold text-green-800 shadow-sm"
+                  >
+                    {capitalize(nutrient.name)}: {nutrient.value}
+                  </motion.span>
+                ))}
+              </div>
+            )}
+
+            {/* AI Health Score */}
+            {healthBadge && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+                className={`inline-block px-4 py-2 rounded-full font-bold mt-2
+                  ${healthBadge.color === "green" ? "bg-green-100 text-green-800" : ""}
+                  ${healthBadge.color === "orange" ? "bg-orange-100 text-orange-800" : ""}
+                  ${healthBadge.color === "red" ? "bg-red-100 text-red-800" : ""}`}
+              >
+                Health: {healthBadge.label}
+              </motion.div>
+            )}
+
+            {/* INGREDIENTS */}
+            <div>
+              <h3 className="font-bold text-lg text-slate-800 mb-3">
+                🧂 Ingredients
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {result.ingredients.map((i, idx) => (
+                  <motion.span
+                    key={idx}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="px-4 py-2 bg-white border border-green-200
+                      rounded-full text-sm shadow-sm hover:shadow-green-200 transition"
+                  >
+                    {i}
+                  </motion.span>
+                ))}
               </div>
             </div>
 
-            {/* actions */}
-            <div style={styles.actionButtons}>
-              <button onClick={handleSave} style={styles.iconButton}>
-                {isSaved ? "💜 Saved" : "♡ Save"}
-              </button>
-              <button onClick={handleShare} style={styles.iconButton}>
-                🔗 Share
-              </button>
-            </div>
+            {/* STEPS */}
+            <div>
+              <h3 className="font-bold text-lg text-slate-800 mb-4">
+                👩‍🍳 Cooking Steps
+              </h3>
 
-            {/* ingredients */}
-            <section style={styles.section}>
-              <h4 style={styles.sectionTitle}>🧂 Ingredients</h4>
-              <div style={styles.ingredientsGrid}>
-                {result.ingredients.map((ing, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      ...styles.ingredientChip,
-                      animationDelay: `${i * 80}ms`,
-                    }}
+              <div className="space-y-4">
+                {result.steps.map((step, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="bg-white rounded-xl p-5 border border-green-200
+                      shadow-md shadow-green-100 hover:shadow-green-200 transition"
                   >
-                    {ing}
-                  </div>
+                    <div className="flex gap-4 items-start">
+                      <div className="w-8 h-8 flex items-center justify-center
+                        rounded-full bg-green-600 text-white font-bold">
+                        {idx + 1}
+                      </div>
+                      <p className="text-slate-700 leading-relaxed">{step}</p>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
-            </section>
+            </div>
 
-            {/* steps */}
-            <section style={styles.section}>
-              <h4 style={styles.sectionTitle}>Steps</h4>
-              <ol style={styles.stepsList}>
-                {result.steps.map((step, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      ...styles.stepItem,
-                      animationDelay: `${i * 100}ms`,
-                    }}
-                  >
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </section>
-          </article>
+          </motion.div>
         )}
+
       </div>
     </div>
   );
 }
-
-/* Styles - glassmorphism + modern */
-const styles = {
- page: {
-  minHeight: "100vh",
-  display: "flex",
-  alignItems: "top",
-  justifyContent: "center",
-  padding: "40px 20px",
-  background: "linear-gradient(135deg,#0a0e1a 0%, #151025 50%, #0a0e1a 100%)", 
-  fontFamily: "'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-  color: "#f0f8ff", 
-  animation: "bgPulse 12s ease-in-out infinite",
- },
- card: {
-  width: "100%",
-  maxWidth: "800px",
-  borderRadius: "18px",
-  padding: "28px",
-  boxShadow: "0 10px 40px rgba(0,0,0,0.8)", 
-  backdropFilter: "blur(8px)",
-  WebkitBackdropFilter: "blur(8px)",
-  background: "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))", 
-  border: "1px solid rgba(255,255,255,0.05)",
-  animation: "cardSlide 0.6s cubic-bezier(.16,.84,.44,1)",
- },
- headerRow: {
-  display: "flex",
-  justifyContent: "center",
-  marginBottom: "18px",
-  textAlign: "center",
- },
- title: {
-  margin: 0,
-  fontSize: "24px",
-  color: "white",
-  fontWeight: 700,
- },
- subtitle: {
-  margin: "6px 0 0",
-  color: "#e0e9f4", 
-  fontSize: "13.5px",
-  fontWeight: 400,
- },
- inputGroup: {
-  display: "flex",
-  gap: "12px",
-  marginTop: "18px",
-  marginBottom: "8px",
-  alignItems: "center",
- },
- input: {
-  flex: 1,
-  padding: "12px 16px",
-  borderRadius: "12px",
-  border: "1px solid rgba(255,255,255,0.08)",
-  background: "rgba(255,255,255,0.03)",
-  color: "#f0f8ff", 
-  fontSize: "15px",
-  outline: "none",
-  transition: "box-shadow 0.2s ease, transform 0.08s ease",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.02)",
- },
- button: {
-  padding: "10px 18px",
-  borderRadius: "999px",
-  border: "none",
-  background: "linear-gradient(90deg,#ffcc33,#ff8833)", 
-  color: "#1a1200", 
-  fontWeight: 700,
-  cursor: "pointer",
-  fontSize: "15px",
-  boxShadow: "0 8px 20px rgba(0,0,0,0.6), 0 6px 18px rgba(255,170,50,0.25)", 
-  transform: "translateY(0)",
-  transition: "transform 120ms ease, box-shadow 180ms ease",
- },
- helperText: {
-  marginTop: "10px",
-  fontSize: "13px",
-  color: "#b0c4e7", 
- },
- error: {
-  marginTop: "14px",
-  padding: "12px",
-  borderRadius: "10px",
-  background: "linear-gradient(180deg, rgba(220,57,88,0.08), rgba(220,57,88,0.04))", 
-  border: "1px solid rgba(220,57,88,0.14)",
-  color: "#ffdfe8",
-  fontSize: "14px",
-  textAlign: "center",
- },
- emptyState: {
-  marginTop: "20px",
-  textAlign: "center",
-  color: "#b0c4e7", 
-  fontSize: "15px",
- },
-
- 
- resultBox: {
-  marginTop: "24px",
-  borderRadius: "14px",
-  overflow: "hidden",
-  border: "1px solid rgba(255,255,255,0.06)",
-  background: "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))",
-  boxShadow: "0 6px 28px rgba(0,0,0,0.7)",
- },
-
- glassHeader: {
-  height: "120px",
-  display: "flex",
-  alignItems: "flex-end",
-  justifyContent: "center",
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  position: "relative",
- },
- glassHeaderOverlay: {
-  width: "100%",
-  padding: "16px 22px",
-  backdropFilter: "blur(6px)",
-  WebkitBackdropFilter: "blur(6px)",
-  background: "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))",
-  borderTop: "1px solid rgba(255,255,255,0.04)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: "12px",
-  color: "#fff",
- },
- headerRecipeTitle: {
-  margin: 0,
-  fontSize: "20px",
-  fontWeight: 700,
-  color: "#ffffff",
-  textShadow: "0 4px 22px rgba(0,0,0,0.45)",
- },
- headerMeta: {
-  display: "flex",
-  alignItems: "center",
-  gap: "10px",
- },
- timeBadge: {
-  padding: "6px 10px",
-  borderRadius: "999px",
-  background: "rgba(255,255,255,0.06)",
-  color: "#eaf2ff", 
-  border: "1px solid rgba(255,255,255,0.04)",
-  fontSize: "13px",
-  fontWeight: 600,
- },
- smallBadges: {
-  display: "flex",
-  gap: "8px",
-  alignItems: "center",
- },
- smallBadge: {
-  padding: "6px 8px",
-  borderRadius: "8px",
-  background: "rgba(255,255,255,0.03)",
-  color: "#e0e9f4", 
-  fontSize: "12px",
-  border: "1px solid rgba(255,255,255,0.03)",
- },
-
- actionButtons: {
-  display: "flex",
-  gap: "10px",
-  padding: "14px 18px 0 18px",
- },
- iconButton: {
-  padding: "8px 12px",
-  borderRadius: "10px",
-  border: "1px solid rgba(255,255,255,0.04)",
-  background: "transparent",
-  color: "#ffdfa0", 
-  cursor: "pointer",
-  fontSize: "14px",
-  fontWeight: 600,
- },
-
- section: {
-  padding: "14px 18px 22px 18px",
- },
- sectionTitle: {
-  margin: 0,
-  marginBottom: "10px",
-  color: "#e0e9f4", 
-  fontSize: "16px",
-  fontWeight: 700,
- },
-
- ingredientsGrid: {
-  display: "flex",
-  gap: "8px",
-  flexWrap: "wrap",
- },
- ingredientChip: {
-  background: "linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))",
-  color: "#e0e9f4", 
-  borderRadius: "999px",
-  padding: "8px 14px",
-  fontSize: "13px",
-  border: "1px solid rgba(255,255,255,0.04)",
-  animation: "pop 300ms ease forwards",
-  opacity: 0,
-  transform: "scale(0.92)",
- },
-
- stepsList: {
-  marginTop: "8px",
-  paddingLeft: "18px",
- },
- stepItem: {
-  marginBottom: "12px",
-  color: "#c8e0ff", 
-  lineHeight: 1.65,
-  fontSize: "15px",
-  animation: "fadeInUp 420ms ease forwards",
-  opacity: 0,
-  transform: "translateY(8px)",
- },
-
- 
- skeletonHeader: {
-  height: "80px",
-  background: "linear-gradient(90deg,#0a0e1a,#151025)", 
-  borderRadius: "8px",
-  marginBottom: "14px",
- },
- skeletonTitle: {
-  height: "18px",
-  width: "45%",
-  background: "#151025", 
-  borderRadius: "6px",
-  marginBottom: "8px",
- },
- skeletonTime: {
-  height: "14px",
-  width: "120px",
-  background: "#151025", 
-  borderRadius: "6px",
-  marginBottom: "14px",
- },
- skeletonSection: {
-  marginBottom: "14px",
- },
- skeletonText: {
-  height: "50px",
-  width: "100%",
-  background: "#151025", 
-  borderRadius: "6px",
-  marginBottom: "8px",
- },
-};
-
-
-export default RecipeCard;
