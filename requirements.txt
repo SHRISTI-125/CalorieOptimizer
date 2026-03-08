@@ -1,6 +1,6 @@
 # Web & App Framework
 streamlit==1.25.0
-flask==2.3.5
+flask==2.2.5          # compatible version
 flask-cors==4.1.1
 
 # Data Handling
@@ -17,10 +17,9 @@ tensorflow==2.14.0
 sentence-transformers==2.2.2
 faiss-cpu==1.7.4
 
-
 # Database
 pymongo==4.4.0
 
 # Utilities
-pickle5==0.0.12  # for backward compatible pickle
+pickle5==0.0.12
 tqdm==4.66.0
