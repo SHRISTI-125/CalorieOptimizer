@@ -86,7 +86,8 @@ with st.sidebar:
     st.markdown("### Calorie Optimizer")
     people_expected = st.slider("Expected People", 10, 500, 120)
     temperature = st.slider("Temperature (°C)", 15, 45, 30)
-    weekend = st.segmented_control("Weekend Event?", ["No", "Yes"], default="No")
+    weekend = st.radio("Weekend Event?", ["No", "Yes"])
+    #weekend = st.segmented_control("Weekend Event?", ["No", "Yes"], default="No")
     previous_waste = st.slider("Previous Waste (plates)", 0, 50, 10)
 
 weekend_value = 1 if weekend == "Yes" else 0
@@ -187,5 +188,6 @@ else:
 y_pred = model.predict(X)
 r2 = r2_score(y, y_pred)
 print("R2 Score:", r2*100)
+
 
 st.markdown("<br><hr><center style='color:#64748b; font-size:0.8rem;'>POWERED BY GEMINI AI • PROMOTING SUSTAINABILITY • PREVENTING WASTE</center>", unsafe_allow_html=True)
