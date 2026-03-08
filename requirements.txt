@@ -17,9 +17,6 @@ tensorflow==2.14.0
 sentence-transformers==2.2.2
 faiss-cpu==1.7.4
 
-# Image Processing
-Pillow==10.0.0
-opencv-python==4.8.0
 
 # Database
 pymongo==4.4.0
