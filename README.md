@@ -4,7 +4,7 @@
 ![Tech](https://img.shields.io/badge/tech-AI%20%7C%20DeepLearning%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
-> **CalorieOptimizer** is an intelligent health-focused web application that uses **Deep Learning and Machine Learning** to analyze food, estimate calories and nutrients, detect potential health risks, generate recipes, suggest healthier alternatives, provide NGO donation options, and track **daily calorie intake** — helping users make *smarter and healthier* food decisions in real-time.
+> CalorieOptimizer is an intelligent, health-focused web application that leverages Deep Learning and Machine Learning to help users make smarter and healthier food decisions in real time. The app can analyze food images to estimate calories and nutrients, detect potential health risks, generate optimized recipes, and suggest healthier alternatives. It also provides options to donate surplus food to NGOs, tracks daily calorie intake, and predicts food waste trends, informing alerts when waste is likely to increase. By combining AI-driven insights with actionable recommendations, CalorieOptimizer empowers users to maintain a healthier lifestyle while reducing food wastage.
 
 ---
 
@@ -32,6 +32,7 @@ The main goals of **CalorieOptimizer** are to:
 - Provide **NGO donation options** to reduce food wastage  
 - Track **daily calorie intake** of users  
 - Promote **balanced nutrition and sustainable eating habits**
+- Reduce food waste by prior information
 
 ---
 
@@ -74,7 +75,7 @@ The main goals of **CalorieOptimizer** are to:
 
 ### 🎨 Frontend
 <p>
-  <img src="https://skillicons.dev/icons?i=html,css,js,react" />
+  <img src="https://skillicons.dev/icons?i=html,css,js,react,streamlit" />
 </p>
 
 
@@ -95,7 +96,7 @@ The main goals of **CalorieOptimizer** are to:
 - **Food.com Recipes Dataset (Kaggle)**  
   https://www.kaggle.com/datasets/
 
-These datasets were used for **food classification, nutrition estimation, and recipe generation**.
+These datasets were used for **food classification, nutrition estimation, and recipe generation, food waste prediction**.
 
 ---
 
@@ -145,6 +146,7 @@ Move the following files into the `backend` folder:
 - predictimage_fromtext.py
 - predictimagename.py
 - recipe_routes.py
+- food_waste_reduction.py
 - recipes.index
 - requirements.txt
 - unified_backend.py
@@ -189,7 +191,7 @@ http://localhost:3000
 - Supports NGOs and food donation programs  
 
 ## ✔ Useful for:
-Dieticians | Fitness trainers | Health-conscious people | Students & researchers | NGOs | Health organizations
+Dieticians | Fitness trainers | Health-conscious people | Students & researchers | NGOs | Health organizations | Restaurants
 
 ## 🎯 Created For
 This project is created for:
@@ -197,7 +199,8 @@ This project is created for:
 - People managing conditions like obesity, diabetes, and heart disease  
 - Dieticians and fitness professionals  
 - Students & researchers in AI and health-tech  
-- NGOs and community nutrition programs  
+- NGOs and community nutrition programs
+- Restaurants who wants to reduce their food wastes
 - Anyone who believes in mindful and sustainable eating
 
 
@@ -208,11 +211,12 @@ This project is created for:
 <p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img3.png" width="390"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img7.png" width="410"/> </p>
 <p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img4.png" width="405"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img5.png" width="415"/> </p>
 
+<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/img/img9.png" width="605"/>
+
 ## 🔮 Future Scope
 
 <ul>
   <li>Barcode scanner for packaged foods  </li>
-  <li>Mobile App (React Native)  </li>
   <li>AI-based meal planner </li>
   <li>Fitness & activity tracking  </li>
   <li>Doctor & nutritionist consultation  </li>
