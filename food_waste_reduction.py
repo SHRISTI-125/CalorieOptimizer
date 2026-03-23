@@ -190,4 +190,4 @@ r2 = r2_score(y, y_pred)
 print("R2 Score:", r2*100)
 
 
-st.markdown("<br><hr><center style='color:#64748b; font-size:0.8rem;'>POWERED BY GEMINI AI • PROMOTING SUSTAINABILITY • PREVENTING WASTE</center>", unsafe_allow_html=True)
+st.markdown("<br><hr><center style='color:#64748b; font-size:0.8rem;'>• PROMOTING SUSTAINABILITY • PREVENTING WASTE</center>", unsafe_allow_html=True)
