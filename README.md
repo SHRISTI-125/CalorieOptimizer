@@ -227,7 +227,7 @@ This project is created for:
 ## 👩‍💻 Author
 
 Built with the vision to empower healthier choices and minimize food waste using technology.🌱<br>
-<br>
+By
 [Shristi Kumari](https://github.com/SHRISTI-125) 
 
 
