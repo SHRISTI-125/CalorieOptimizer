@@ -88,7 +88,7 @@ The main goals of **CalorieOptimizer** are to:
 
 ---
 
-## 📚 Datasets Used
+<!--## 📚 Datasets Used
 
 - **Food101 Dataset (Kaggle)**  
   https://www.kaggle.com/datasets/dansbecker/food-101
@@ -99,6 +99,7 @@ The main goals of **CalorieOptimizer** are to:
 These datasets were used for **food classification, nutrition estimation, and recipe generation, food waste prediction**.
 
 ---
+-->
 
 ## 🧩 System Architecture
 
