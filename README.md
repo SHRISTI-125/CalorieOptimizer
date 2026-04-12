@@ -181,6 +181,11 @@ Frontend will start on:
 http://localhost:3000
 ```
 
+
+Diagram
+<img width="1033" height="755" alt="Screenshot " src="https://github.com/user-attachments/assets/c4bc8c4d-013a-407c-a90b-edc2006a03a9" />
+
+
 ---
 
 ## 🌟 Why This Project Matters
