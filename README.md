@@ -213,7 +213,7 @@ This project is created for:
 ---
 
 # 🖼️ UI Snapshots
-<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img1.png" width="440"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img2.png" width="410"/> </p>
+<p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img1.png" width="440"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img2.png" width="380"/> </p>
 <p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img3.png" width="390"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img4.png" width="410"/> </p>
 <p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img5.png" width="405"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img6.png" width="415"/> </p>
 <p float="left"> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img8.png" width="405"/> <img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img8.png" width="415"/> </p>
