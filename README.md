@@ -1,13 +1,15 @@
-# CalorieOptimizer 
+# CalorieOptimizer
 
 ![Status](https://img.shields.io/badge/status-active-success)
 ![Tech](https://img.shields.io/badge/tech-AI%20%7C%20DeepLearning%20%7C%20ML%20%7C%20React%20%7C%20Flask-blue)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
+<img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img16.png"> 
+
 > CalorieOptimizer is a health-focused web application that leverages Deep Learning and Machine Learning to help users make smarter and healthier food decisions in real time. The app can analyze food images to estimate calories and nutrients, detect potential health risks, generate optimized recipes, and suggest healthier alternatives. It also provides options to donate surplus food to NGOs, tracks daily calorie intake, and predicts food waste trends, informing alerts when waste is likely to increase. By combining AI-driven insights with actionable recommendations, CalorieOptimizer empowers users to maintain a healthier lifestyle while reducing food wastage.
 
 
-<img src="https://raw.githubusercontent.com/SHRISTI-125/CalorieOptimizer/main/image/img16.png"> </p>
+
 ---
 
 ## 📌 Problem Statement
